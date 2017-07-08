@@ -5,7 +5,7 @@ LDFLAGS = -Lminilibx
 LDLIBS = -lmlx -framework OpenGL -framework AppKit
 CFLAGS += -Iinclude/ -Iminilibx
 
-FILENAMES = main.cpp
+FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp
 
 FNS = $(addprefix src/, $(FILENAMES))
 OBJECTS = $(addprefix build/, $(FILENAMES:.cpp=.o))
