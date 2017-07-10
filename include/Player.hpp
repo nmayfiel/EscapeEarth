@@ -10,8 +10,9 @@ public:
 	Player();
 	~Player();
 
-    int		x;
-    int		y;
+    static	int		x;
+    static	int		y;
+	static 	int		speed;
 
 	void	Player_move(int keycode);
 

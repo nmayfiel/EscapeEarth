@@ -8,6 +8,8 @@
 #define K_RIGHT     124
 #define K_LEFT      123
 #define K_SPACE     49
+#define K_EXIT      53
+
 #define G_WIDTH     768
 #define G_HEIGHT    768
 

@@ -2,7 +2,7 @@
 # define GAMEDATA_HPP
 
 #include "Clock.hpp"
-#include "../src/Classes/player/Player.hpp"
+#include "Player.hpp"
 #include <string>
 
 class		GameData

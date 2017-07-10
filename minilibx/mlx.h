@@ -1,9 +1,9 @@
 /*
-** mlx.h for MinilibX in 
-** 
+** mlx.h for MinilibX in
+**
 ** Made by Charlie Root
 ** Login   <ol@staff.42.fr>
-** 
+**
 ** Started on  Mon Jul 31 16:37:50 2000 Charlie Root
 ** Last update Tue Oct 01 16:23:28 2014 Olivier Crouzet
 */
@@ -141,7 +141,7 @@ int	mlx_destroy_image(void *mlx_ptr, void *img_ptr);
 */
 
 int	mlx_hook(void *win_ptr, int x_event, int x_mask,
-                 int (*funct)(), void *param);
+                 int (*funct)(int, GameData*), void *param);
 
 int	mlx_do_key_autorepeatoff(void *mlx_ptr);
 int	mlx_do_key_autorepeaton(void *mlx_ptr);
@@ -150,5 +150,5 @@ int	mlx_do_sync(void *mlx_ptr);
 #ifdef __cplusplus
 }
 #endif
-	
+
 #endif /* MLX_H */

@@ -3,10 +3,14 @@
 #include "helpers.hpp"
 #include <mlx.h>
 #include "draw.hpp"
+#include <cstdio>
 
 int		key_press_hook(int keycode, GameData *Game)
 {
-	if (keycode < K_LEFT && keycode > K_UP) {
+	if (keycode == K_EXIT){
+		exit(0);
+	}
+	if (keycode >= K_LEFT && keycode <= K_UP) {
 		Game->P1.Player_move(keycode);
 		Game->updated = 1;
 	}
@@ -46,7 +50,7 @@ int32_t		gameLoop(void *gameptr)
 int	main(void)
 {
 	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);
-
+	game.updated = 1;
 	game.SetKeyHook(&key_press_hook);
 	game.setLoopHook(&gameLoop);
 	game.Loop();
