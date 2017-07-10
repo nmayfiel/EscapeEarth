@@ -16,7 +16,13 @@ void	GameData::updateTime(void) { clock.tick(); }
 
 double	GameData::currentTime(void) { return (clock.globalTime);}
 
-void	GameData::startLoop(void) { mlx_loop(mlx); }
+void	GameData::Loop(void) { mlx_loop(mlx); }
+
+void 	GameData::SetKeyHook(int (*function)(int, GameData*))
+{
+	void *t = static_cast<void *>(this);
+	mlx_hook(win, 2, 0, function, this);
+}
 
 void	GameData::setLoopHook(int (*funct)(void *))
 {
