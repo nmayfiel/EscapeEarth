@@ -10,9 +10,10 @@ public:
 	Player();
 	~Player();
 
-    static	int		x;
-    static	int		y;
-	static 	int		speed;
+  static int		x;
+  static int		y;
+	static int		speed;
+	Skin		skin;
 
 	void	Player_move(int keycode);
 
