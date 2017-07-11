@@ -17,15 +17,15 @@ Skin::setPosition(void)
   return ;
 }
 
-Skin::checkColliders(shape){
-  while (shape is still giving x,y coordinate offsets)
-    if (given coordinate is shared by a object::type->hostile_object)
-      receive damage from object;
+Skin::checkColliders(){
+  while (this->shape is still giving x,y coordinate offsets)
+    if (checkCollision(this->shape->x, this->shape->y, object::type->hostile_object))
+      receive damage from object::damage;
 }
 
-Skin::drawTexture(shape){
-  while (shape is still giving x,y coordinate offsets)
-    append-to-image(given coordinate of skin's texture pack);
+Skin::applyTexture(Image){
+  while (this->shape is still giving x,y coordinate offsets)
+    append-to-image(this->shape->x, this->shape->y, this->texture);
 }
 
 

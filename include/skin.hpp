@@ -11,13 +11,12 @@ public:
 
   int x;
   int y;
-  shape skin_shape;
-  texture skin_texture; //set colourization on each pixel according to shape;
-  colliders = check colliders on each pixel according to shape;
+  shape shape;
+  texture texture; //set colourization on each pixel according to shape;
 
   void setPosition()
-  void checkColliders(skin_shape);
-  void drawTexture(skin_texture, Image);
+  void checkColliders(); //check colliders on each pixel according to shape;
+  void applyTexture(Image);
 
 
 
