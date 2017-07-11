@@ -16,6 +16,7 @@ public:
 
   void setPosition()
   void checkColliders(); //check colliders on each pixel according to shape;
+  void checkCollision(int x, int y, type type);
   void applyTexture(Image);
 
 

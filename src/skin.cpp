@@ -19,9 +19,12 @@ Skin::setPosition(void)
 
 Skin::checkColliders(){
   while (this->shape is still giving x,y coordinate offsets)
-    if (checkCollision(this->shape->x, this->shape->y, object::type->hostile_object))
-      receive damage from object::damage;
+    if (Image::this_coordinate(x,y)->object->type != this_skins->object->type){
+      object::this->hp - object::existing->damage;
+      object::existing-> hp - object::this->damage;
+    }
 }
+
 
 Skin::applyTexture(Image){
   while (this->shape is still giving x,y coordinate offsets)
