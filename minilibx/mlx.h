@@ -97,14 +97,27 @@ unsigned int	mlx_get_color_value(void *mlx_ptr, int color);
 ** dealing with Events
 */
 
+// NOTE(nick): The following prototypes were changed to include parameters in the
+// function pointer.
+	
 int	mlx_mouse_hook (void *win_ptr, int (*funct_ptr)(void *), void *param);
 int	mlx_key_hook (void *win_ptr, int (*funct_ptr)(void *), void *param);
-int	mlx_expose_hook (void *win_ptr, int (*funct_ptr)(void *), void *param);
 
+	
+int	mlx_expose_hook (void *win_ptr, int (*funct_ptr)(void *), void *param);
 int	mlx_loop_hook (void *mlx_ptr, int (*funct_ptr)(void *), void *param);
 int	mlx_loop (void *mlx_ptr);
 
+// Added by nmayfiel 7/11/2017
+int	mlx_key_down(void *win_ptr, int (*funct_ptr)(void *), void *param);
+int	mlx_key_up(void *win_ptr, int (*funct_ptr)(void *), void *param);
+int	mlx_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
+int	mlx_mouse_moved_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
+int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
+// End added by nmayfiel
 
+
+	
 /*
 **  hook funct are called as follow :
 **

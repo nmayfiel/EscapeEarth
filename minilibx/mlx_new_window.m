@@ -693,6 +693,32 @@ void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*funct_ptr)
   [(id)(win_ptr->winid) setEvent:x_event andFunc:funct_ptr andParam:param];
 }
 
+
+// Added by nmayfiel 7/11/2017
+int	mlx_key_down(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:2 andFunc:funct_ptr andParam:param];
+}
+int	mlx_key_up(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:3 andFunc:funct_ptr andParam:param];
+}
+int	mlx_click_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:4 andFunc:funct_ptr andParam:param];
+}
+int	mlx_mouse_moved_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:6 andFunc:funct_ptr andParam:param];
+}
+int	mlx_close_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:17 andFunc:funct_ptr andParam:param];
+}
+// End added by nmayfiel
+
+
+
 int     mlx_do_key_autorepeatoff(mlx_ptr_t *mlx_ptr)
 {
   mlx_win_list_t *win;

@@ -97,6 +97,13 @@ int32_t		gameLoop(void *gameptr)
 // Still need to add functions for key hooks, and come up with C++
 // way to store key and mouse input
 
+// NOTE(nick):
+// int	mlx_key_down(void *win_ptr, int (*funct_ptr)(void *), void *param);
+// int	mlx_key_up(void *win_ptr, int (*funct_ptr)(void *), void *param);
+// int	mlx_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
+// int	mlx_mouse_moved_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
+// int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
+
 int	main(void)
 {
 	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);

@@ -13,7 +13,7 @@ public:
   static int		x;
   static int		y;
 	static int		speed;
-	Skin		skin;
+//	Skin		skin;
 
 	void	Player_move(int keycode);
 

@@ -2,13 +2,14 @@
 #define ESCAPEEARTH_H
 
 #include <cstdint>
+#include <Carbon/Carbon.h>
 
-#define K_UP        126
-#define K_DOWN      125
-#define K_RIGHT     124
-#define K_LEFT      123
-#define K_SPACE     49
-#define K_EXIT      53
+#define K_UP        kVK_UpArrow
+#define K_DOWN      kVK_DownArrow
+#define K_RIGHT     kVK_RightArrow
+#define K_LEFT      kVK_LeftArrow
+#define K_SPACE     kVK_Space
+#define K_EXIT      kVK_Escape
 
 #define G_WIDTH     768
 #define G_HEIGHT    768
