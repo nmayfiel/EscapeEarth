@@ -21,6 +21,7 @@ void	GameData::Loop(void) { mlx_loop(mlx); }
 void 	GameData::SetKeyHook(int (*function)(int, GameData*))
 {
 	void *t = static_cast<void *>(this);
+	int *funct = static_cast<void *(void)>
 	mlx_hook(win, 2, 0, function, t);
 }
 

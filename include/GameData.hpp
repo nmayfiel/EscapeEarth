@@ -3,6 +3,7 @@
 
 #include "Clock.hpp"
 #include "Player.hpp"
+#include "input.hpp"
 #include <string>
 
 class		GameData
@@ -10,7 +11,7 @@ class		GameData
 public:
 	GameData(std::string winName, int32_t width, int32_t height);
 	Player	P1;
-	bool	updated;
+	// bool	updated;
 	void	Loop(void);
 	void	updateTime(void);
 	double	currentTime(void);
@@ -20,6 +21,7 @@ public:
 	void	*mlx;
 	void	*win;
 	Clock	clock;
+	t_input input;
 
 	//NOTE(Anthony): Are you sure about the "void *mlx" being private?
 };

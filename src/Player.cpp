@@ -10,16 +10,16 @@ Player::Player(void)
     return ;
 }
 
-void    Player::Player_move(int keycode)
+void    Player::Player_move(t_input input)
 {
-    if (keycode == K_UP || keycode == K_DOWN){
-        if (keycode == K_UP)
+    if (input->k_up || input->k_down){
+        if (input->k_up)
             this->y -= this->speed;
         else
             this->y += this->speed;
     }
-    if (keycode == K_LEFT || keycode == K_RIGHT){
-        if (keycode == K_LEFT)
+    if (input->k_left || input->k_right){
+        if (input->k_left)
             this->x -= this->speed;
         else
             this->x += this->speed;
