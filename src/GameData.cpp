@@ -10,6 +10,7 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	win = mlx_new_window(mlx, width, height, cWinName);
 	delete [] cWinName;
 	clock = Clock();
+	input = (t_input){};
 }
 
 void	GameData::updateTime(void) { clock.tick(); }
@@ -18,11 +19,16 @@ double	GameData::currentTime(void) { return (clock.globalTime);}
 
 void	GameData::Loop(void) { mlx_loop(mlx); }
 
-void 	GameData::SetKeyHook(int (*function)(int, GameData*))
+void	GameData::setKeyDownHook(int (*function)(int, void*))
 {
 	void *t = static_cast<void *>(this);
-	int *funct = static_cast<void *(void)>
-	mlx_hook(win, 2, 0, function, t);
+	mlx_key_down(win, function, t);
+}
+
+void 	GameData::setKeyUpHook(int (*function)(int, void*))
+{
+	void *t = static_cast<void *>(this);
+	mlx_key_up(win, function, t);
 }
 
 void	GameData::setLoopHook(int (*funct)(void *))

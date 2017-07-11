@@ -10,6 +10,7 @@
 #define K_LEFT      kVK_LeftArrow
 #define K_SPACE     kVK_Space
 #define K_EXIT      kVK_Escape
+#define K_ENTER		kVK_Return
 
 #define G_WIDTH     768
 #define G_HEIGHT    768

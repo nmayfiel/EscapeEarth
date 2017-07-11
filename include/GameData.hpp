@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "input.hpp"
 #include <string>
+#include <mlx.h>
 
 class		GameData
 {
@@ -16,7 +17,8 @@ public:
 	void	updateTime(void);
 	double	currentTime(void);
  	void	setLoopHook(int (*f)(void *));
-	void	SetKeyHook(int (*function)(int, GameData *));
+	void	setKeyDownHook(int (*function)(int, void *));
+	void	setKeyUpHook(int (*function)(int, void *));
 //	int		key_press_hook(int keycode, GameData *Game);
 	void	*mlx;
 	void	*win;

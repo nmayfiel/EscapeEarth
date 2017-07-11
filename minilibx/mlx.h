@@ -109,8 +109,8 @@ int	mlx_loop_hook (void *mlx_ptr, int (*funct_ptr)(void *), void *param);
 int	mlx_loop (void *mlx_ptr);
 
 // Added by nmayfiel 7/11/2017
-int	mlx_key_down(void *win_ptr, int (*funct_ptr)(void *), void *param);
-int	mlx_key_up(void *win_ptr, int (*funct_ptr)(void *), void *param);
+int	mlx_key_down(void *win_ptr, int (*funct_ptr)(int, void *), void *param);
+int	mlx_key_up(void *win_ptr, int (*funct_ptr)(int, void *), void *param);
 int	mlx_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
 int	mlx_mouse_moved_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
 int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
@@ -154,7 +154,7 @@ int	mlx_destroy_image(void *mlx_ptr, void *img_ptr);
 */
 
 int	mlx_hook(void *win_ptr, int x_event, int x_mask,
-                 int (*funct)(int, GameData*), void *param);
+                 int (*funct)(int, void*), void *param);
 
 int	mlx_do_key_autorepeatoff(void *mlx_ptr);
 int	mlx_do_key_autorepeaton(void *mlx_ptr);

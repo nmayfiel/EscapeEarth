@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <ctime>
+# include "input.hpp"
 
 class Player
 {
@@ -15,7 +16,7 @@ public:
 	static int		speed;
 //	Skin		skin;
 
-	void	Player_move(int keycode);
+	void	Player_move(t_input *input);
 
 	// //bool	getDoesMove() const;
 	// //bool	getDoesShoot() const;
