@@ -5,9 +5,6 @@ void	putPixelToImage(Image *img, float x, float y)
 	int32_t *buffer;
 	int32_t pos;
 
-
-	// TODO(nick): we need to check if this is actually drawing within
-	// the bounds of the buffer, i.e. pos is > 0 and <= image size in pixels - 1
 	buffer = (int32_t *)img->data;
 	if (y > 0 && x > 0 && y < img->height && y < img->width)
 	{
