@@ -24,9 +24,12 @@ public:
 //	int		key_press_hook(int keycode, GameData *Game);
 	void	*mlx;
 	void	*win;
+	int32_t winWidth;
+	int32_t winHeight;
 	Clock	clock;
 	t_input input;
 	t_image gameImage;
+	t_image winImage;
 
 	//NOTE(Anthony): Are you sure about the "void *mlx" being private?
 };

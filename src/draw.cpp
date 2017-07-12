@@ -1,6 +1,6 @@
 #include "draw.hpp"
 
-void	put_pixel_to_image(t_image *img, float x, float y)
+void	putPixelToImage(t_image *img, float x, float y)
 {
 	int32_t *buffer;
 	int32_t pos;
@@ -9,12 +9,64 @@ void	put_pixel_to_image(t_image *img, float x, float y)
 	// TODO(nick): we need to check if this is actually drawing within
 	// the bounds of the buffer, i.e. pos is > 0 and <= image size in pixels - 1
 	buffer = (int32_t *)img->data;
-	pos = x + (img->width * y);
-	buffer[pos] = 0x0000FF00;
+	if (y > 0 && x > 0 && y < img->height && y < img->width)
+	{
+		pos = x + (img->width * y);
+		buffer[pos] = 0x0000FF00;
+	}
 }
 
-void draw(GameData *Game)
+void	drawRectangle(t_image *img, float x, float y)
 {
-	put_pixel_to_image(&Game->gameImage, Game->P1.x, Game->P1.y);
-	mlx_put_image_to_window(Game->mlx, Game->win, Game->gameImage.ptr, 0, 0);
+	int32_t *buff;
+	int32_t row;
+	int32_t col;
+	int32_t pos;
+	
+	buff = (int32_t *)img->data;
+	for (row = y; row < y + 170; ++row)
+	{
+		for (col = x; col < x + 234; ++col)
+		{
+			pos = col + (img->width * row);
+			if (pos >= 0
+			    && pos < img->size_in_pixels
+			    && col >= 0
+			    && col < img->width
+			    && row >= 0
+			    && row < img->height)
+				buff[col + (img->width * row)] = 0x0000FF00;
+		}
+	}
+}
+
+void	scaleImageToImage(t_image *dest, t_image *src)
+{
+	int32_t *dbuff;
+	int32_t *sbuff;
+	int desty;
+	int destx;
+	int srcy;
+	int srcx;
+	
+	dbuff = (int32_t *)dest->data;
+	sbuff = (int32_t *)src->data;
+	for (int i = 0; i < dest->size_in_pixels; ++i)
+	{
+		destx = i % dest->width;
+		desty = i / dest->width;
+
+		srcy = (float)src->height * ((float)desty / (float)dest->height);
+		srcx = (float)src->width * ((float)destx / (float)dest->width);
+		int srci = (srcy * src->width) + srcx;
+
+		dbuff[i] = sbuff[srci];
+	}
+}
+
+void draw(GameData *game)
+{
+	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
+	scaleImageToImage(&game->winImage, &game->gameImage);
+	mlx_put_image_to_window(game->mlx, game->win, game->winImage.ptr, game->winWidth / 2 - game->winImage.width / 2, game->winHeight / 2 - game->winImage.height / 2);
 }
