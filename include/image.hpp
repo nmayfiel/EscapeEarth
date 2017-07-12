@@ -7,7 +7,7 @@ typedef struct s_point
 	int32_t y;
 }		t_point;
 
-typedef struct s_image
+struct		Image
 {
 	void	*ptr;
 	int8_t	*data;
@@ -19,6 +19,6 @@ typedef struct s_image
 	int32_t	height;
 	int32_t	width;
 	t_point	center;
-}             t_image;
+};
 
 #endif

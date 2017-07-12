@@ -34,8 +34,8 @@ public:
 	int32_t winHeight;
 	Clock	clock;
 	t_input input;
-	t_image gameImage;
-	t_image winImage;
+	Image gameImage;
+	Image winImage;
 	Player	P1;
 	
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?

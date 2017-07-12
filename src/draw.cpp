@@ -1,6 +1,6 @@
 #include "draw.hpp"
 
-void	putPixelToImage(t_image *img, float x, float y)
+void	putPixelToImage(Image *img, float x, float y)
 {
 	int32_t *buffer;
 	int32_t pos;
@@ -16,7 +16,7 @@ void	putPixelToImage(t_image *img, float x, float y)
 	}
 }
 
-void	drawRectangle(t_image *img, float x, float y)
+void	drawRectangle(Image *img, float x, float y)
 {
 	int32_t *buff;
 	int32_t row;
@@ -40,7 +40,7 @@ void	drawRectangle(t_image *img, float x, float y)
 	}
 }
 
-void	scaleImageToImage(t_image *dest, t_image *src)
+void	scaleImageToImage(Image *dest, Image *src)
 {
 	int32_t *dbuff;
 	int32_t *sbuff;

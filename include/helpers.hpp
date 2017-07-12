@@ -17,6 +17,6 @@
 #define G_HEIGHT    768
 
 double	secondsPerFrame(uint64_t last, uint64_t current);
-void		clear_image(t_image *img, int32_t color);
+void		clear_image(Image *img, int32_t color);
 
 #endif

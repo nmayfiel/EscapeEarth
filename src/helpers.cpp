@@ -14,7 +14,7 @@ double		secondsPerFrame(uint64_t last, uint64_t current)
 	return ((double)nanosecs * 1.0E-9);
 }
 
-void		clear_image(t_image *img, int32_t color)
+void		clear_image(Image *img, int32_t color)
 {
 	int32_t *buffer;
 

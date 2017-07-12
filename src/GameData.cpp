@@ -25,7 +25,7 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	// set up game image
 	int gameSpaceWidth = 768;
 	int gameSpaceHeight = 1366;
-	gameImage = (t_image){};
+	gameImage = (Image){};
 	gameImage.width = gameSpaceWidth;
 	gameImage.height = gameSpaceHeight;
 	gameImage.ptr = mlx_new_image(mlx, gameSpaceWidth, gameSpaceHeight);
@@ -50,7 +50,7 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 		winImageWidth = (float)height / aspectRatio;
 		winImageHeight = height;
 	}
-	winImage = (t_image){};
+	winImage = (Image){};
 	winImage.width = winImageWidth;
 	winImage.height = winImageHeight;
 	winImage.ptr = mlx_new_image(mlx, winImageWidth, winImageHeight);
