@@ -25,16 +25,16 @@ Ship::InitProjectile(float x, float y, float velocity, int tx_index, int damage,
 
 Ship::ShipDraw(int tx_index, t_image *img, t_image *src, int x, int y)
 {
-	int32_t width = this->width;
-	int32_t height = this->height;
-	int32_t *data;
-	int32_t *src_data;
-	int32_t i;
-	int32_t si;
-	int32_t sx;
-	int32_t sy;
-	int32_t x2;
-	int32_t y2;
+	int width = this->width;
+	int height = this->height;
+	int *data;
+	int *src_data;
+	int i;
+	int si;
+	int sx;
+	int sy;
+	int x2;
+	int y2;
 
 	data = (int *)img->data;
 	src_data = (int *)src->data;
