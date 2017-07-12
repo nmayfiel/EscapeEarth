@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <Carbon/Carbon.h>
+#include "image.hpp"
 
 #define K_UP        kVK_UpArrow
 #define K_DOWN      kVK_DownArrow
@@ -17,5 +18,6 @@
 
 
 double	secondsPerFrame(uint64_t last, uint64_t current);
+void		clear_image(t_image *img, int32_t color);
 
 #endif

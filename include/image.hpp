@@ -1,20 +1,24 @@
 #ifndef IMAGE_HPP
 # define IMAGE_HPP
 
-#include "helpers.hpp"
+typedef struct s_point
+{
+	int32_t x;
+	int32_t y;
+}		t_point;
 
 typedef struct s_image
 {
-  void *ptr;
-  int *data;
-  int	height;
-  int	width;
-  int size_in_pixels;
-  int size_in_bytes;
-  int size_line;
-  int bpp;
-  int endian;
-  int center[2];
+	void	*ptr;
+	int8_t	*data;
+	int32_t	bpp;
+	int32_t	size_line;
+	int32_t	size_in_bytes;
+	int32_t	size_in_pixels;
+	int32_t	endian;
+	int32_t	height;
+	int32_t	width;
+	t_point	center;
 }             t_image;
 
 #endif

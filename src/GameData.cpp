@@ -1,16 +1,33 @@
 #include "Clock.hpp"
 #include "GameData.hpp"
 #include <mlx.h>
+#include "image.hpp"
 
 GameData::GameData(std::string winName, int32_t width, int32_t height)
 {
+	mlx = mlx_init();
 	char *cWinName = new char[winName.length()];
 	std::strcpy(cWinName, winName.c_str());
-	mlx = mlx_init();
 	win = mlx_new_window(mlx, width, height, cWinName);
 	delete [] cWinName;
+
 	clock = Clock();
+
 	input = (t_input){};
+
+	// set up game image
+	gameImage = (t_image){};
+	gameImage.width = width;
+	gameImage.height = height;
+	gameImage.ptr = mlx_new_image(mlx, width, height);
+	gameImage.data = (int8_t *)mlx_get_data_addr(gameImage.ptr,
+						     &gameImage.bpp,
+						     &gameImage.size_line,
+						     &gameImage.endian);
+	gameImage.size_in_pixels = width * height;
+	gameImage.size_in_bytes = gameImage.size_line * height;
+	gameImage.center.x = width / 2;
+	gameImage.center.y = height / 2;
 }
 
 void	GameData::updateTime(void) { clock.tick(); }

@@ -1,4 +1,5 @@
 #include <mach/mach_time.h>
+#include "image.hpp"
 
 double		secondsPerFrame(uint64_t last, uint64_t current)
 {
@@ -11,4 +12,13 @@ double		secondsPerFrame(uint64_t last, uint64_t current)
 		mach_timebase_info(&tb);
 	nanosecs = elapsed * tb.numer / tb.denom;
 	return ((double)nanosecs * 1.0E-9);
+}
+
+void		clear_image(t_image *img, int32_t color)
+{
+	int32_t *buffer;
+
+	buffer = (int32_t *)img->data;
+	for (int i = 0; i < img->size_in_pixels; ++i)
+		buffer[i] = color;
 }

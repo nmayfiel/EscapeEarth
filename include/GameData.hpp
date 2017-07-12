@@ -4,6 +4,7 @@
 #include "Clock.hpp"
 #include "Player.hpp"
 #include "input.hpp"
+#include "image.hpp"
 #include <string>
 #include <mlx.h>
 
@@ -25,6 +26,7 @@ public:
 	void	*win;
 	Clock	clock;
 	t_input input;
+	t_image gameImage;
 
 	//NOTE(Anthony): Are you sure about the "void *mlx" being private?
 };

@@ -81,8 +81,10 @@ int32_t		gameLoop(void *gameptr)
 	game->P1.Player_move(&game->input);
 
 	// if (game->updated == 1){
-		mlx_clear_window(game->mlx, game->win);
-		draw(game);
+//	mlx_clear_window(game->mlx, game->win);
+	clear_image(&game->gameImage, 0x00990099);
+	draw(game);
+	//draw(game);
 	// }
 	// game->updated = 0;
 
