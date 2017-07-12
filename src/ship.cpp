@@ -15,9 +15,9 @@ Ship::ShipMove()
   this->y += this->speed;
 }
 
-Ship::InitProjectile(float x, float y, float velocity, int tx_index, int damage, GameData *game){
-  game->entity[game->entity.total].x = x;
-  game->entity[game->entity.total].y = y;
+Ship::InitProjectile(float velocity, int tx_index, int damage, GameData *game){
+  game->entity[game->entity.total].x = this->x;
+  game->entity[game->entity.total].y = this->y;
   game->entity[game->entity.total].velocity = velocity;
   game->entity[game->entity.total].tx_index = tx_index;
   game->entity[game->entity.total].damage = damage;

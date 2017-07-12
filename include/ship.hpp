@@ -14,11 +14,11 @@ class Ship
   float x;
   float y;
   float velocity
-  Texture texture;
+  int   tx_index;
   Movement pattern;
 
   ShipMove();
-  InitProjectile(float x, float y, float velocity, int tx_index, int damage, GameData *game);
+  InitProjectile(float velocity, int tx_index, int damage, GameData *game);
   ShipDraw(int tx_index, t_image *img, t_image *src, int x, int y);
 };
 
