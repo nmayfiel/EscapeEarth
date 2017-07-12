@@ -23,6 +23,14 @@ class Ship
   ShipDraw(int tx_index, t_image *img, t_image *src, int x, int y);
 };
 
+class entity{
+
+  Entity();
+  ~Entity();
+
+  DrawEntity(int tx_index, t_image *src, int x, int y, GameData *Game);
+}
+
 class Texture
 {
   Texture();
