@@ -9,13 +9,17 @@ Ship::Ship(void)
     return ;
 }
 
-Ship::Ship_move()
+Ship::ShipMove()
 {
 	//read this->pattern;
   this->y += this->speed;
 }
 
-Ship::Ship_draw(int ship_index, t_image *img, t_image *src, int x, int y)
+Ship::CreateProjectile(){
+  
+};
+
+Ship::ShipDraw(int ship_index, t_image *img, t_image *src, int x, int y)
 {
 	int32_t width = this->width;
 	int32_t height = this->height;

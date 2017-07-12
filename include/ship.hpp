@@ -16,9 +16,9 @@ class Ship
   Texture texture[];
   Movement pattern;
 
-  getPosition();
-  Ship::Ship_move();
-  Ship::Ship_draw(int ship_index, t_image *img, t_image *src, int x, int y);
+  ShipMove();
+  CreateProjectile();
+  ShipDraw(int ship_index, t_image *img, t_image *src, int x, int y);
 };
 
 class Texture
