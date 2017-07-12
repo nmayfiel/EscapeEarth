@@ -15,6 +15,7 @@ class Ship
   float y;
   float velocity
   int   tx_index;
+  //NOTE(mick) Put entity in gameData and make this value correspond to game->entity->texture[tx_index]
   Movement pattern;
 
   ShipMove();
