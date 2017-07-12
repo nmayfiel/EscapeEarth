@@ -3,6 +3,10 @@
 #include <mlx.h>
 #include "image.hpp"
 
+const float GameData::aspectRatio = 16.0 / 9.0;
+const int32_t GameData::gameSpaceWidth = 768;
+const int32_t GameData::gameSpaceHeight = 1366;
+
 GameData::GameData(std::string winName, int32_t width, int32_t height)
 {
 	mlx = mlx_init();
@@ -19,32 +23,31 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	input = (t_input){};
 
 	// set up game image
-	int gameImageWidth = 768;
-	int gameImageHeight = 1366;
+	int gameSpaceWidth = 768;
+	int gameSpaceHeight = 1366;
 	gameImage = (t_image){};
-	gameImage.width = gameImageWidth;
-	gameImage.height = gameImageHeight;
-	gameImage.ptr = mlx_new_image(mlx, gameImageWidth, gameImageHeight);
+	gameImage.width = gameSpaceWidth;
+	gameImage.height = gameSpaceHeight;
+	gameImage.ptr = mlx_new_image(mlx, gameSpaceWidth, gameSpaceHeight);
 	gameImage.data = (int8_t *)mlx_get_data_addr(gameImage.ptr,
 						     &gameImage.bpp,
 						     &gameImage.size_line,
 						     &gameImage.endian);
-	gameImage.size_in_pixels = gameImageWidth * gameImageHeight;
-	gameImage.size_in_bytes = gameImage.size_line * gameImageHeight;
-	gameImage.center.x = gameImageWidth / 2;
-	gameImage.center.y = gameImageHeight / 2;
+	gameImage.size_in_pixels = gameSpaceWidth * gameSpaceHeight;
+	gameImage.size_in_bytes = gameImage.size_line * gameSpaceHeight;
+	gameImage.center.x = gameSpaceWidth / 2;
+	gameImage.center.y = gameSpaceHeight / 2;
 
-	float gameAspect = 16.0 / 9.0;
 	int winImageWidth;
 	int winImageHeight;
-	if ((float)height / (float)width > gameAspect)
+	if ((float)height / (float)width > aspectRatio)
 	{
 		winImageWidth = width;
-		winImageHeight = (float)width * 1.6;
+		winImageHeight = (float)width * aspectRatio;
 	}
 	else
 	{
-		winImageWidth = (float)height / 1.6;
+		winImageWidth = (float)height / aspectRatio;
 		winImageHeight = height;
 	}
 	winImage = (t_image){};

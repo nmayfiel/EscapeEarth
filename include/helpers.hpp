@@ -13,9 +13,8 @@
 #define K_EXIT      kVK_Escape
 #define K_ENTER		kVK_Return
 
-#define G_WIDTH     768
+#define G_WIDTH     1260
 #define G_HEIGHT    768
-
 
 double	secondsPerFrame(uint64_t last, uint64_t current);
 void		clear_image(t_image *img, int32_t color);
