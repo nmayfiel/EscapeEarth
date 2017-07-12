@@ -11,14 +11,15 @@ class Ship
   ~Ship();
 
   bool is_alive;
-  int x;
-  int y;
-  Texture texture[];
+  float x;
+  float y;
+  float velocity
+  Texture texture;
   Movement pattern;
 
   ShipMove();
-  CreateProjectile();
-  ShipDraw(int ship_index, t_image *img, t_image *src, int x, int y);
+  InitProjectile(float x, float y, float velocity, int tx_index, int damage, GameData *game);
+  ShipDraw(int tx_index, t_image *img, t_image *src, int x, int y);
 };
 
 class Texture

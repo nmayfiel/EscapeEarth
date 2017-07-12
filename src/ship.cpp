@@ -15,11 +15,15 @@ Ship::ShipMove()
   this->y += this->speed;
 }
 
-Ship::CreateProjectile(){
-  
+Ship::InitProjectile(float x, float y, float velocity, int tx_index, int damage, GameData *game){
+  game->entity[game->entity.total].x = x;
+  game->entity[game->entity.total].y = y;
+  game->entity[game->entity.total].velocity = velocity;
+  game->entity[game->entity.total].tx_index = tx_index;
+  game->entity[game->entity.total].damage = damage;
 };
 
-Ship::ShipDraw(int ship_index, t_image *img, t_image *src, int x, int y)
+Ship::ShipDraw(int tx_index, t_image *img, t_image *src, int x, int y)
 {
 	int32_t width = this->width;
 	int32_t height = this->height;
