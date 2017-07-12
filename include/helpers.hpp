@@ -15,6 +15,7 @@
 #define G_WIDTH     768
 #define G_HEIGHT    768
 
+
 double	secondsPerFrame(uint64_t last, uint64_t current);
 
 #endif
