@@ -19,6 +19,7 @@ public:
  	void	setLoopHook(int (*f)(void *));
 	void	setKeyDownHook(int (*function)(int, void *));
 	void	setKeyUpHook(int (*function)(int, void *));
+	void	setCloseHook(int (*function)(void *));
 //	int		key_press_hook(int keycode, GameData *Game);
 	void	*mlx;
 	void	*win;

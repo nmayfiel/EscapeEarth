@@ -1,4 +1,4 @@
-NAME = space_shooter
+NAME = EscapeEarth
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -Lminilibx

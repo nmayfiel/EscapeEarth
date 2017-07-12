@@ -17,62 +17,55 @@ static void	change_key_state(t_key *key, bool is_down)
 		key->changed = 0;
 }
 
-int		key_down(int keycode, void *game)
+int		keyDownHook(int keycode, void *game)
 {
 	GameData *Game;
 
 	Game = static_cast<GameData *>(game);
-	if (keycode == K_EXIT){
+	if (keycode == K_EXIT)
 		exit(0);
-	}
-	if (keycode == K_UP || keycode == K_DOWN){
-			if (keycode == K_UP)
-					change_key_state(&Game->input.k_up, 1);
-			else
-					change_key_state(&Game->input.k_down, 1);
-	}
-	if (keycode == K_LEFT || keycode == K_RIGHT){
-			if (keycode == K_LEFT)
-					change_key_state(&Game->input.k_left, 1);
-			else
-					change_key_state(&Game->input.k_right, 1);
-	}
-	if (keycode == K_SPACE) {
+	if (keycode == K_UP)
+		change_key_state(&Game->input.k_up, 1);
+	if (keycode == K_DOWN)
+		change_key_state(&Game->input.k_down, 1);
+	if (keycode == K_LEFT)
+		change_key_state(&Game->input.k_left, 1);
+	if (keycode == K_RIGHT)
+		change_key_state(&Game->input.k_right, 1);
+	if (keycode == K_SPACE)
 		change_key_state(&Game->input.k_space, 1);
-	}
-	if (keycode == K_ENTER) {
+	if (keycode == K_ENTER)
 		change_key_state(&Game->input.k_enter, 1);
-	}
 	return (0);
 }
 
-int		key_up(int keycode, void *game)
+int		keyUpHook(int keycode, void *game)
 {
 	GameData *Game;
 
 	Game = static_cast<GameData *>(game);
-	if (keycode == K_EXIT){
+	if (keycode == K_EXIT)
 		exit(0);
-	}
-	if (keycode == K_UP || keycode == K_DOWN){
-			if (keycode == K_UP)
-					change_key_state(&Game->input.k_up, 0);
-			else
-					change_key_state(&Game->input.k_down, 0);
-	}
-	if (keycode == K_LEFT || keycode == K_RIGHT){
-			if (keycode == K_LEFT)
-					change_key_state(&Game->input.k_left, 0);
-			else
-					change_key_state(&Game->input.k_right, 0);
-	}
-	if (keycode == K_SPACE) {
+	if (keycode == K_UP)
+		change_key_state(&Game->input.k_up, 0);
+	if (keycode == K_DOWN)
+		change_key_state(&Game->input.k_down, 0);
+	if (keycode == K_LEFT)
+		change_key_state(&Game->input.k_left, 0);
+	if (keycode == K_RIGHT)
+		change_key_state(&Game->input.k_right, 0);
+	if (keycode == K_SPACE)
 		change_key_state(&Game->input.k_space, 0);
-	}
-	if (keycode == K_ENTER) {
+	if (keycode == K_ENTER)
 		change_key_state(&Game->input.k_enter, 0);
-	}
 	return (0);
+}
+
+int32_t		closeHook(void *gameptr)
+{
+	GameData *game;
+	game = static_cast<GameData *>(gameptr);
+	exit (0);
 }
 
 int32_t		gameLoop(void *gameptr)
@@ -114,11 +107,10 @@ int32_t		gameLoop(void *gameptr)
 int	main(void)
 {
 	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);
-	// game.updated = 1;
-	game.setKeyDownHook(&key_down);
-	game.setKeyUpHook(&key_up);
-	//game.SetKeyHook(&key_down);
-	//game.SetKeyHook(&key_up);
+	game.setKeyDownHook(&keyDownHook);
+	game.setKeyUpHook(&keyUpHook);
+// TODO(nick): Get close hook working, right now, causes exception
+// game.setCloseHook(&closeHook);
 	game.setLoopHook(&gameLoop);
 	game.Loop();
 	return (0);
