@@ -15,24 +15,6 @@ Ship::Ship_move()
   this->y += this->speed;
 }
 
-Ship::Ship_move(t_input *input)
-{
-	if (input->k_up.ended_down || input->k_down.ended_down)
-	{
-		if (input->k_up.ended_down)
-			this->y -= this->speed;
-		else
-			this->y += this->speed;
-	}
-	if (input->k_left.ended_down || input->k_right.ended_down)
-	{
-		if (input->k_left.ended_down)
-			this->x -= this->speed;
-		else
-			this->x += this->speed;
-	}
-}
-
 Ship::Ship_draw(int ship_index, t_ship ship, t_image *img, t_image *src, int x, int y)
 {
 	int32_t width = ship->width;
