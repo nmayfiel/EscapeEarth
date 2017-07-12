@@ -18,7 +18,7 @@ class Ship
 
   getPosition();
   Ship::Ship_move();
-  Ship::Ship_draw(int ship_index, t_ship ship, t_image *img, t_image *src, int x, int y);
+  Ship::Ship_draw(int ship_index, t_image *img, t_image *src, int x, int y);
 };
 
 class Texture
