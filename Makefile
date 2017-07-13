@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -Lminilibx
 LDLIBS = -lmlx -framework OpenGL -framework AppKit
 CFLAGS += -Iinclude/ -Iminilibx
+ARCH = -arch i386
 
 FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp draw.cpp Player.cpp
 
@@ -15,17 +16,21 @@ all: $(NAME)
 minilibx/libmlx.a:
 	cd minilibx && make
 
-$(NAME): $(OBJECTS) minilibx/libmlx.a
-	$(CC) $(LDFLAGS) $(LDLIBS) -o $(NAME) $(OBJECTS)
+images.o: images.asm
+	nasm -f macho -o $@ $< -DDARWIN
+
+$(NAME): $(OBJECTS) images.o minilibx/libmlx.a
+	$(CC) $(LDFLAGS) $(LDLIBS) $(ARCH) -o $(NAME) $(OBJECTS)
 
 build/%.o: src/%.cpp | build
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) $(ARCH) -o $@ -c $<
 
 build:
 	mkdir build/
 
 clean:
 	/bin/rm -rf build/
+	/bin/rm -f images.o
 
 fclean: clean
 	cd minilibx && make clean

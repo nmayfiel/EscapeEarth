@@ -6,6 +6,13 @@
 #include <cstdio>
 #include "input.hpp"
 
+extern const uint8_t image_one_start;
+extern const int32_t image_one_size;
+extern const uint8_t image_two_start;
+extern const int32_t image_two_size;
+extern const uint8_t image_three_start;
+extern const int32_t image_three_size;
+
 static void	change_key_state(t_key *key, bool is_down)
 {
 	if (key->ended_down != is_down)
