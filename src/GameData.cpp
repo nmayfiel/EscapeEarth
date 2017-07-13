@@ -94,3 +94,8 @@ void	GameData::setCloseHook(int (*funct)(void *))
 	void *t = static_cast<void *>(this);
 	mlx_close_hook(mlx, funct, t);
 }
+
+void	GameData::setImages(Image *imgs)
+{
+	images = imgs;
+}

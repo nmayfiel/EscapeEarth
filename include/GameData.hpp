@@ -23,6 +23,7 @@ public:
 	void	setKeyDownHook(int (*function)(int, void *));
 	void	setKeyUpHook(int (*function)(int, void *));
 	void	setCloseHook(int (*function)(void *));
+	void	setImages(Image *imgs);
 
 	static const float	aspectRatio;
 	static const int32_t	gameSpaceWidth;
@@ -36,6 +37,7 @@ public:
 	t_input input;
 	Image gameImage;
 	Image winImage;
+	Image *images;
 	Player	P1;
 	
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?

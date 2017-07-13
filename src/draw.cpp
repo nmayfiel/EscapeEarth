@@ -1,4 +1,5 @@
 #include "draw.hpp"
+#include <sstream>
 
 void	putPixelToImage(Image *img, float x, float y)
 {
@@ -37,7 +38,7 @@ void	drawRectangle(Image *img, float x, float y)
 	}
 }
 
-void	scaleImageToImage(Image *dest, Image *src)
+void	scaleImageToImage(Image *src, Image *dest)
 {
 	int32_t *dbuff;
 	int32_t *sbuff;
@@ -61,9 +62,45 @@ void	scaleImageToImage(Image *dest, Image *src)
 	}
 }
 
+void	drawBackground(Image *src, Image *dest, int yoffset)
+{
+	int32_t *dbuff;
+	int32_t *sbuff;
+	
+	dbuff = (int32_t *)dest->data;
+	sbuff = (int32_t *)src->data;
+// get the starting y value for the value
+	yoffset %= src->height;
+	yoffset = src->height - yoffset;
+	int si = src->width * yoffset - 1;
+	for (int i = 0; i < dest->size_in_pixels; ++i, ++si)
+	{
+		if (si > src->size_in_pixels)
+			si = 0;
+		dbuff[i] = sbuff[si];
+	}
+}
+
 void draw(GameData *game)
 {
+	static int offset = 0;
+	mlx_clear_window(game->mlx, game->win);
+	clear_image(&game->gameImage, 0x00990099);
+
+	drawBackground(&game->images[0], &game->gameImage, offset);
+
 	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
-	scaleImageToImage(&game->winImage, &game->gameImage);
+
+	scaleImageToImage(&game->gameImage, &game->winImage);
+
 	mlx_put_image_to_window(game->mlx, game->win, game->winImage.ptr, game->winWidth / 2 - game->winImage.width / 2, game->winHeight / 2 - game->winImage.height / 2);
+
+	std::stringstream framerate;
+	framerate << game->clock.lastFrameTime;
+	std::string framestr = framerate.str();
+	char *framecstr = new char[framestr.length()];
+	std::strcpy(framecstr, framestr.c_str());
+	mlx_string_put(game->mlx, game->win, G_WIDTH - 120, G_HEIGHT - 30, 0x00EEEEEE, framecstr);
+	offset++;
+	//mlx_put_image_to_window(game->mlx, game->win, game->images[0].ptr, 0, 0);
 }

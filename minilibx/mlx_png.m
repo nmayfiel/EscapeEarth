@@ -26,6 +26,52 @@ static void normalize_color_format_alpha(uint8_t *buffer, int size)
      }
 }
 
+void *png_data_to_image(mlx_ptr_t *xvar, const uint8_t *fileData, uint32_t size, int *w, int *h)
+{
+	mlx_img_list_t *img;
+	uint8_t *data;
+	uint8_t *buffer;
+	NSData *imgData = [[NSData alloc] initWithBytes: fileData length: size];
+
+	NSImage *ns_image = [[NSImage alloc] initWithData: imgData];
+	NSImageRep *image_rep = [[ns_image representations] objectAtIndex:0];
+	if (!(img = mlx_new_image(xvar, image_rep.pixelsWide, image_rep.pixelsHigh)))
+	{
+		*w = 0;
+		*h = 0;
+		return ((void *)0);
+	}
+	NSBitmapImageRep *rep = [
+		[NSBitmapImageRep alloc]
+				  initWithBitmapDataPlanes: NULL
+						pixelsWide: image_rep.pixelsWide
+						pixelsHigh: image_rep.pixelsHigh
+					     bitsPerSample: 8
+					   samplesPerPixel: 4
+						  hasAlpha: YES
+						  isPlanar: NO
+					    colorSpaceName: NSDeviceRGBColorSpace
+					       bytesPerRow: image_rep.pixelsWide * 4
+					      bitsPerPixel: 32
+		];
+	NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep: rep];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext: ctx];  
+	[ns_image drawAtPoint: NSZeroPoint fromRect: NSZeroRect operation: NSCompositeCopy fraction: 1.0];
+	[ctx flushGraphics];
+	[NSGraphicsContext restoreGraphicsState];
+	data = [rep bitmapData];
+	buffer = (uint8_t *)img->buffer;
+	memcpy(buffer, data, rep.bytesPerRow * rep.pixelsHigh);
+	normalize_color_format_alpha(buffer, rep.bytesPerRow * rep.pixelsHigh);
+	[imgData release];
+	[ns_image release];
+	[rep release];
+	*w = image_rep.pixelsWide;
+	*h = image_rep.pixelsHigh;
+	return (img);
+}
+
 void *png_file_to_image(mlx_ptr_t *xvar, const char *filename, int *w, int *h)
 {
      mlx_img_list_t *img;

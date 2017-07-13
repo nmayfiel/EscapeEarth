@@ -1,6 +1,8 @@
 #ifndef IMAGE_HPP
 # define IMAGE_HPP
 
+#include <stdint.h>
+
 typedef struct s_point
 {
 	int32_t x;
@@ -19,6 +21,8 @@ struct		Image
 	int32_t	height;
 	int32_t	width;
 	t_point	center;
+
+	void	getImageFromData(void *mlx, const uint8_t *imgData, uint32_t size);
 };
 
 #endif

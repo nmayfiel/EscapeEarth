@@ -133,7 +133,9 @@ int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
 */
 
 void *png_file_to_image(void *mlx_ptr, const char *filename, int *width, int *height);
+void *png_data_to_image(void *mlx_ptr, const uint8_t *data, uint32_t size, int *w, int *h);
 
+	
 /*
 **  Usually asked...
 */

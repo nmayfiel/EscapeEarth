@@ -6,7 +6,7 @@ LDLIBS = -lmlx -framework OpenGL -framework AppKit
 CFLAGS += -Iinclude/ -Iminilibx
 ARCH = -arch i386
 
-FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp draw.cpp Player.cpp
+FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp draw.cpp Player.cpp image.cpp
 
 FNS = $(addprefix src/, $(FILENAMES))
 OBJECTS = $(addprefix build/, $(FILENAMES:.cpp=.o))
@@ -20,7 +20,7 @@ images.o: images.asm
 	nasm -f macho -o $@ $< -DDARWIN
 
 $(NAME): $(OBJECTS) images.o minilibx/libmlx.a
-	$(CC) $(LDFLAGS) $(LDLIBS) $(ARCH) -o $(NAME) $(OBJECTS)
+	$(CC) $(LDFLAGS) $(LDLIBS) $(ARCH) -o $(NAME) $(OBJECTS) images.o
 
 build/%.o: src/%.cpp | build
 	$(CC) $(CFLAGS) $(ARCH) -o $@ -c $<

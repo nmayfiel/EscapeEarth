@@ -1,10 +1,11 @@
 #include <iostream>
+#include <mlx.h>
+#include <cstdio>
 #include "GameData.hpp"
 #include "helpers.hpp"
-#include <mlx.h>
 #include "draw.hpp"
-#include <cstdio>
 #include "input.hpp"
+#include "image.hpp"
 
 extern const uint8_t image_one_start;
 extern const int32_t image_one_size;
@@ -89,7 +90,6 @@ int32_t		gameLoop(void *gameptr)
 
 	// if (game->updated == 1){
 //	mlx_clear_window(game->mlx, game->win);
-	clear_image(&game->gameImage, 0x00990099);
 	draw(game);
 	//draw(game);
 	// }
@@ -116,6 +116,11 @@ int32_t		gameLoop(void *gameptr)
 int	main(void)
 {
 	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);
+	Image *images = new Image[3];
+	images[0].getImageFromData(game.mlx, &image_one_start, image_one_size);
+	images[1].getImageFromData(game.mlx, &image_two_start, image_two_size);
+	images[2].getImageFromData(game.mlx, &image_three_start, image_three_size);
+	game.setImages(images);
 	game.setKeyDownHook(&keyDownHook);
 	game.setKeyUpHook(&keyUpHook);
 // TODO(nick): Get close hook working, right now, causes exception
