@@ -16,6 +16,8 @@
 #define G_WIDTH     1260
 #define G_HEIGHT    768
 
+#define LIM_AMMO    30
+
 double	secondsPerFrame(uint64_t last, uint64_t current);
 void		clear_image(Image *img, int32_t color);
 

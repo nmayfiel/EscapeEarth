@@ -1,5 +1,4 @@
-#include "image.hpp"
-#include "mlx.h"
+#include "GameData.hpp"
 
 void	Image::getImageFromData(void *mlx, const uint8_t *imgData, uint32_t size)
 {

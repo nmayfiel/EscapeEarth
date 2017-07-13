@@ -6,7 +6,7 @@ LDLIBS = -lmlx -framework OpenGL -framework AppKit
 CFLAGS += -Iinclude/ -Iminilibx
 ARCH = -arch i386
 
-FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp draw.cpp Player.cpp image.cpp
+FILENAMES = main.cpp GameData.cpp Clock.cpp helpers.cpp draw.cpp Player.cpp image.cpp Projectile.cpp
 
 FNS = $(addprefix src/, $(FILENAMES))
 OBJECTS = $(addprefix build/, $(FILENAMES:.cpp=.o))

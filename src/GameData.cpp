@@ -62,7 +62,7 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	winImage.size_in_bytes = winImage.size_line * winImageHeight;
 	winImage.center.x = winImageWidth / 2;
 	winImage.center.y = winImageHeight / 2;
-
+    nb_ammo = 0;
 }
 
 void	GameData::updateTime(void) { clock.tick(); }

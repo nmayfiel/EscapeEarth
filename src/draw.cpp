@@ -1,5 +1,4 @@
-#include "draw.hpp"
-#include <sstream>
+#include "GameData.hpp"
 
 void	putPixelToImage(Image *img, float x, float y)
 {
@@ -9,7 +8,7 @@ void	putPixelToImage(Image *img, float x, float y)
 	buffer = (int32_t *)img->data;
 	if (y > 0 && x > 0 && y < img->height && y < img->width)
 	{
-		pos = x + (img->width * y);
+			pos = x + (img->width * y);
 		buffer[pos] = 0x0000FF00;
 	}
 }
@@ -20,7 +19,7 @@ void	drawRectangle(Image *img, float x, float y)
 	int32_t row;
 	int32_t col;
 	int32_t pos;
-	
+
 	buff = (int32_t *)img->data;
 	for (row = y; row < y + 170; ++row)
 	{
@@ -46,7 +45,7 @@ void	scaleImageToImage(Image *src, Image *dest)
 	int destx;
 	int srcy;
 	int srcx;
-	
+
 	dbuff = (int32_t *)dest->data;
 	sbuff = (int32_t *)src->data;
 	for (int i = 0; i < dest->size_in_pixels; ++i)
@@ -62,11 +61,43 @@ void	scaleImageToImage(Image *src, Image *dest)
 	}
 }
 
+void 	drawProjectiles(GameData *Game)
+{
+	for(int i = 0; i < LIM_AMMO ;i++){
+		appendImage(&Game->images[4], &Game->gameImage,
+			Game->ammo[i].x, Game->ammo[i].y);
+	}
+}
+
+void    appendImage(Image *src, Image *dst, float x, float y)
+{
+    int8_t     *dbuff;
+    int8_t     *sbuff;
+    int         a = 0, b, i, si = 0, startx, starty = 0;
+
+    dbuff = (int8_t *)dst->data;
+    sbuff = (int8_t *)src->data;
+    startx = x - src->width / 2;
+    starty = y - src->height / 2;
+    i = (src->width * starty) + startx;
+    while (a < src->height){
+        b = 0;
+        while (b < src->width){
+            dst[i] = src[si];
+            b++;
+            i++;
+            si++;
+        }
+        i += dst->width - src->width;
+        a++;
+    }
+}
+
 void	drawBackground(Image *src, Image *dest, int yoffset)
 {
 	int32_t *dbuff;
 	int32_t *sbuff;
-	
+
 	dbuff = (int32_t *)dest->data;
 	sbuff = (int32_t *)src->data;
 // get the starting y value for the value
@@ -88,7 +119,7 @@ void draw(GameData *game)
 	clear_image(&game->gameImage, 0x00990099);
 
 	drawBackground(&game->images[0], &game->gameImage, offset);
-
+    drawProjectiles(game);
 	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
 
 	scaleImageToImage(&game->gameImage, &game->winImage);

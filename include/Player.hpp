@@ -1,9 +1,7 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
-# include <iostream>
-# include <ctime>
-# include "input.hpp"
+typedef struct s_input t_input;
 
 class Player
 {
@@ -11,12 +9,16 @@ public:
 	Player();
 	~Player();
 
-  static int		x;
-  static int		y;
+    static int		x;
+    static int		y;
 	static int		speed;
+    int         id;
+    float       velocity;
+    int         damage;
 //	Skin		skin;
 
 	void	Player_move(t_input *input);
+    //void    Player_shoot(t_input *input, Projectile *ammo, int *nb_ammo);
 
 	// //bool	getDoesMove() const;
 	// //bool	getDoesShoot() const;

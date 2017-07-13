@@ -1,10 +1,12 @@
 #ifndef DRAW_HPP
 # define DRAW_HPP
 
-#include "GameData.hpp"
-#include "helpers.hpp"
-#include <mlx.h>
+struct   Image;
+
+class   GameData;
 
 void    draw(GameData *Game);
+void    appendImage(Image *src, Image *dst, float x, float y);
+void    drawProjectiles(GameData *Game);
 
 #endif

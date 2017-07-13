@@ -1,11 +1,7 @@
-#include <iostream>
-#include <mlx.h>
-#include <cstdio>
-#include "GameData.hpp"
-#include "helpers.hpp"
 #include "draw.hpp"
-#include "input.hpp"
-#include "image.hpp"
+#include "GameData.hpp"
+#include "Player.hpp"
+#include "Projectile.hpp"
 
 extern const uint8_t image_one_start;
 extern const int32_t image_one_size;
@@ -13,6 +9,10 @@ extern const uint8_t image_two_start;
 extern const int32_t image_two_size;
 extern const uint8_t image_three_start;
 extern const int32_t image_three_size;
+extern const uint8_t image_four_start;
+extern const int32_t image_four_size;
+extern const uint8_t image_five_start;
+extern const int32_t image_five_size;
 
 static void	change_key_state(t_key *key, bool is_down)
 {
@@ -87,8 +87,17 @@ int32_t		gameLoop(void *gameptr)
 // After displaying the new image, upadted goes to 0
 
 	game->P1.Player_move(&game->input);
+    if (game->input.k_space.ended_down){
+        //game->ammo[game->nb_ammo].Projectile_create(game);
+        game->nb_ammo++;
+    }
+    //game->P1.Player_shoot(&game->input, &game->ammo[game->nb_ammo], &game->nb_ammo);
+    /*for(int i = 0; i < game->nb_ammo; i++)
+        game->ammo[i].Projectile_move(&game->ammo);*/
 
-	// if (game->updated == 1){
+    //Projectile_move(&game);
+
+    // if (game->updated == 1){
 //	mlx_clear_window(game->mlx, game->win);
 	draw(game);
 	//draw(game);
@@ -116,10 +125,12 @@ int32_t		gameLoop(void *gameptr)
 int	main(void)
 {
 	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);
-	Image *images = new Image[3];
+	Image *images = new Image[5];
 	images[0].getImageFromData(game.mlx, &image_one_start, image_one_size);
 	images[1].getImageFromData(game.mlx, &image_two_start, image_two_size);
 	images[2].getImageFromData(game.mlx, &image_three_start, image_three_size);
+    images[3].getImageFromData(game.mlx, &image_four_start, image_four_size);
+    images[4].getImageFromData(game.mlx, &image_five_start, image_five_size);
 	game.setImages(images);
 	game.setKeyDownHook(&keyDownHook);
 	game.setKeyUpHook(&keyUpHook);

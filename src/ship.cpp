@@ -1,4 +1,4 @@
-#include "ship.hpp"
+#include "GameData.hpp"
 
 int		Ship::speed = 1;
 int		Ship::x = 100;

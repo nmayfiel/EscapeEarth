@@ -1,5 +1,4 @@
-#include "Player.hpp"
-#include "helpers.hpp"
+#include "GameData.hpp"
 
 int		Player::speed = 3;
 int		Player::x = 100;
@@ -21,6 +20,14 @@ void    Player::Player_move(t_input *input)
 	if (input->k_right.ended_down)
 		this->x += this->speed;
 }
+
+/*void    Player::Player_shoot(t_input *input, Projectile *ammo, int *nb_ammo)
+{
+    if (input->k_space.ended_down){
+        Projectile::Projectile_create(ammo);
+        *nb_ammo++;
+    }
+}*/
 
 Player::~Player(void)
 {

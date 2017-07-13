@@ -1,6 +1,4 @@
-#include "Clock.hpp"
-#include "helpers.hpp"
-#include <mach/mach_time.h>
+#include "GameData.hpp"
 
 Clock::Clock(void)
 {
