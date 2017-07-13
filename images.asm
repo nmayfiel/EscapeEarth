@@ -1,7 +1,8 @@
-bits 32
+bits 32 			; this is 32 bit assembly code
 
-section .rodata
+section .rodata 		; read only section
 
+    ;; global varaibles to acces in our program
 global _image_one_start
 global _image_one_size
 global _image_two_start
@@ -9,8 +10,8 @@ global _image_two_size
 global _image_three_start
 global _image_three_size
 
-_image_one_start:   incbin "Assets/Art/Background/Chapter1_Background.png"
-_image_one_size:    dd $-_image_one_start
+_image_one_start:   incbin "Assets/Art/Background/Chapter1_Background.png" ; include bin
+_image_one_size:    dd $-_image_one_start ; pos - image_one_start pos
 _image_two_start: incbin "Assets/Art/Background/Chapter2_Background.png"
 _image_two_size:    dd $-_image_two_start
 _image_three_start: incbin "Assets/Art/Background/Chapter3_Background.png"
