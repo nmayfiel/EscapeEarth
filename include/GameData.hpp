@@ -18,8 +18,8 @@ public:
 	double	currentTime(void);
 	void	setImages(Image *imgs);
 	void	setWidthHeight(int w, int h);
-	void	*mlx(void);
-	void	*win(void);
+	void	*getMlx(void);
+	void	*getWin(void);
 
 	static const float	aspectRatio;
 	static const int32_t	gameSpaceWidth;

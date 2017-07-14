@@ -26,47 +26,47 @@ static void	change_key_state(t_key *key, bool is_down)
 		key->changed = 0;
 }
 
-int		keyDownHook(int keycode, void *game)
+int		keyDownHook(int keycode, void *in)
 {
-	GameData *Game;
+	t_input *input;
 
-	Game = static_cast<GameData *>(game);
+	input = static_cast<t_input *>(in);
 	if (keycode == K_EXIT)
 		exit(0);
 	if (keycode == K_UP)
-		change_key_state(&Game->input.k_up, 1);
+		change_key_state(&input->k_up, 1);
 	if (keycode == K_DOWN)
-		change_key_state(&Game->input.k_down, 1);
+		change_key_state(&input->k_down, 1);
 	if (keycode == K_LEFT)
-		change_key_state(&Game->input.k_left, 1);
+		change_key_state(&input->k_left, 1);
 	if (keycode == K_RIGHT)
-		change_key_state(&Game->input.k_right, 1);
+		change_key_state(&input->k_right, 1);
 	if (keycode == K_SPACE)
-		change_key_state(&Game->input.k_space, 1);
+		change_key_state(&input->k_space, 1);
 	if (keycode == K_ENTER)
-		change_key_state(&Game->input.k_enter, 1);
+		change_key_state(&input->k_enter, 1);
 	return (0);
 }
 
-int		keyUpHook(int keycode, void *game)
+int		keyUpHook(int keycode, void *in)
 {
-	GameData *Game;
+	t_input *input;
 
-	Game = static_cast<GameData *>(game);
+	input = static_cast<t_input *>(in);
 	if (keycode == K_EXIT)
 		exit(0);
 	if (keycode == K_UP)
-		change_key_state(&Game->input.k_up, 0);
+		change_key_state(&input->k_up, 0);
 	if (keycode == K_DOWN)
-		change_key_state(&Game->input.k_down, 0);
+		change_key_state(&input->k_down, 0);
 	if (keycode == K_LEFT)
-		change_key_state(&Game->input.k_left, 0);
+		change_key_state(&input->k_left, 0);
 	if (keycode == K_RIGHT)
-		change_key_state(&Game->input.k_right, 0);
+		change_key_state(&input->k_right, 0);
 	if (keycode == K_SPACE)
-		change_key_state(&Game->input.k_space, 0);
+		change_key_state(&input->k_space, 0);
 	if (keycode == K_ENTER)
-		change_key_state(&Game->input.k_enter, 0);
+		change_key_state(&input->k_enter, 0);
 	return (0);
 }
 
@@ -116,8 +116,8 @@ int	main(void)
 	images[2].getImageFromData(mlx, &image_three_start, image_three_size);
 	game.setImages(images);
 
-	MlxManager::setKeyDownHook(win, &keyDownHook, &game);
-	MlxManager::setKeyUpHook(win, &keyUpHook, &game);
+	MlxManager::setKeyDownHook(win, &keyDownHook, &game.input);
+	MlxManager::setKeyUpHook(win, &keyUpHook, &game.input);
 	MlxManager::setLoopHook(mlx, &gameLoop, &game);
 	MlxManager::setCloseHook(win, &closeHook, &game);
 	MlxManager::startLoop(mlx);
