@@ -50,6 +50,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+	
 void	*mlx_init();
 /*
 **  needed before everything else.
@@ -111,7 +113,7 @@ int	mlx_loop (void *mlx_ptr);
 // Added by nmayfiel 7/11/2017
 int	mlx_key_down(void *win_ptr, int (*funct_ptr)(int, void *), void *param);
 int	mlx_key_up(void *win_ptr, int (*funct_ptr)(int, void *), void *param);
-int	mlx_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
+int	mlx_mouse_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
 int	mlx_mouse_moved_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
 int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
 // End added by nmayfiel

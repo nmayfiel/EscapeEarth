@@ -2,24 +2,22 @@
 #include "GameData.hpp"
 #include <mlx.h>
 #include "image.hpp"
+#include "MlxManager.hpp"
 
 const float GameData::aspectRatio = 16.0 / 9.0;
 const int32_t GameData::gameSpaceWidth = 768;
 const int32_t GameData::gameSpaceHeight = 1366;
 
-GameData::GameData(std::string winName, int32_t width, int32_t height)
+void	GameData::setWidthHeight(int w, int h)
 {
-	mlx = mlx_init();
-	char *cWinName = new char[winName.length()];
-	std::strcpy(cWinName, winName.c_str());
-	win = mlx_new_window(mlx, width, height, cWinName);
-	delete [] cWinName;
+	winWidth = w;
+	winHeight = h;
+}
 
-	winWidth = width;
-	winHeight = height;
-	
-	clock = Clock();
-
+GameData::GameData(void*& mlxptr, void*& winptr, Clock &c, int32_t width, int32_t height):
+	mlx(mlxptr), win(winptr), clock(c)
+{
+	setWidthHeight(width, height);
 	input = (t_input){};
 
 	// set up game image
@@ -40,15 +38,15 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 
 	int winImageWidth;
 	int winImageHeight;
-	if ((float)height / (float)width > aspectRatio)
+	if ((float)winHeight / (float)winWidth > aspectRatio)
 	{
-		winImageWidth = width;
-		winImageHeight = (float)width * aspectRatio;
+		winImageWidth = winWidth;
+		winImageHeight = (float)winWidth * aspectRatio;
 	}
 	else
 	{
-		winImageWidth = (float)height / aspectRatio;
-		winImageHeight = height;
+		winImageWidth = (float)winHeight / aspectRatio;
+		winImageHeight = winHeight;
 	}
 	winImage = (Image){};
 	winImage.width = winImageWidth;
@@ -68,32 +66,6 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 void	GameData::updateTime(void) { clock.tick(); }
 
 double	GameData::currentTime(void) { return (clock.globalTime);}
-
-void	GameData::Loop(void) { mlx_loop(mlx); }
-
-void	GameData::setKeyDownHook(int (*function)(int, void*))
-{
-	void *t = static_cast<void *>(this);
-	mlx_key_down(win, function, t);
-}
-
-void 	GameData::setKeyUpHook(int (*function)(int, void*))
-{
-	void *t = static_cast<void *>(this);
-	mlx_key_up(win, function, t);
-}
-
-void	GameData::setLoopHook(int (*funct)(void *))
-{
-	void *t = static_cast<void *>(this);
-	mlx_loop_hook(mlx, funct, t);
-}
-
-void	GameData::setCloseHook(int (*funct)(void *))
-{
-	void *t = static_cast<void *>(this);
-	mlx_close_hook(mlx, funct, t);
-}
 
 void	GameData::setImages(Image *imgs)
 {

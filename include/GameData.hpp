@@ -12,18 +12,14 @@ class		GameData
 {
 public:
 
-	GameData(std::string winName, int32_t width, int32_t height);
+	GameData(void*& mlx, void*& win, Clock &c, int32_t width, int32_t height);
 
-	
-	// bool	updated;
-	void	Loop(void);
 	void	updateTime(void);
 	double	currentTime(void);
- 	void	setLoopHook(int (*f)(void *));
-	void	setKeyDownHook(int (*function)(int, void *));
-	void	setKeyUpHook(int (*function)(int, void *));
-	void	setCloseHook(int (*function)(void *));
 	void	setImages(Image *imgs);
+	void	setWidthHeight(int w, int h);
+	void	*mlx(void);
+	void	*win(void);
 
 	static const float	aspectRatio;
 	static const int32_t	gameSpaceWidth;
@@ -41,11 +37,10 @@ public:
 	Player	P1;
 	
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?
-
-	// NOTE(Nick): It's typical for most variables in a class to be private,
-	//  and get/set them with functions, otherwise why not use a struct?
-	// If we design this properly, you will only need to use it from within
-	// the class itself
+	// NOTE(Nick): Yes, it should be private eventually, this is typical
+	// 	when you want to control who can set it. We will only set it
+	//	one time, then after that we will just get it with the member
+	//	function void *mlx()
 };
 
 #endif

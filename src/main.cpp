@@ -6,6 +6,7 @@
 #include "draw.hpp"
 #include "input.hpp"
 #include "image.hpp"
+#include "MlxManager.hpp"
 
 extern const uint8_t image_one_start;
 extern const int32_t image_one_size;
@@ -95,37 +96,30 @@ int32_t		gameLoop(void *gameptr)
 	// }
 	// game->updated = 0;
 
-// NOTE(nick): uncomment this to see that the game timer is working
-//	std::cout << game->currentTime() << std::endl;
-
 	return (0);
 }
 
-// NOTE(nick): GameData is a class that will hold all of our data that we pass around
-// in the mlx hooks
-// Still need to add functions for key hooks, and come up with C++
-// way to store key and mouse input
-
-// NOTE(nick):
-// int	mlx_key_down(void *win_ptr, int (*funct_ptr)(void *), void *param);
-// int	mlx_key_up(void *win_ptr, int (*funct_ptr)(void *), void *param);
-// int	mlx_click_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
-// int	mlx_mouse_moved_hook(void *win_ptr, int (*funct_ptr)(int, int, int, void *), void *param);
-// int	mlx_close_hook(void *win_ptr, int (*funct_ptr)(void *), void *param);
-
 int	main(void)
 {
-	GameData game = GameData("Escape EARTH", G_WIDTH, G_HEIGHT);
+	void *mlx = MlxManager::init();
+	void *win = MlxManager::newWindow(mlx, G_WIDTH, G_HEIGHT, "Escape EARTH");
+	Clock clock;
+	GameData game = GameData(mlx, win, clock, G_WIDTH, G_HEIGHT);
+
+	// TODO(nick): These images probably need to be std::vector
+	// 	maybe try to mess with images.asm to get them in a better format
+	// 	you may only need a pointer to the start, then a number for sizes
+	//	of each, then maybe an end, for a sanity check ?
 	Image *images = new Image[3];
-	images[0].getImageFromData(game.mlx, &image_one_start, image_one_size);
-	images[1].getImageFromData(game.mlx, &image_two_start, image_two_size);
-	images[2].getImageFromData(game.mlx, &image_three_start, image_three_size);
+	images[0].getImageFromData(mlx, &image_one_start, image_one_size);
+	images[1].getImageFromData(mlx, &image_two_start, image_two_size);
+	images[2].getImageFromData(mlx, &image_three_start, image_three_size);
 	game.setImages(images);
-	game.setKeyDownHook(&keyDownHook);
-	game.setKeyUpHook(&keyUpHook);
-// TODO(nick): Get close hook working, right now, causes exception
-// game.setCloseHook(&closeHook);
-	game.setLoopHook(&gameLoop);
-	game.Loop();
+
+	MlxManager::setKeyDownHook(win, &keyDownHook, &game);
+	MlxManager::setKeyUpHook(win, &keyUpHook, &game);
+	MlxManager::setLoopHook(mlx, &gameLoop, &game);
+	MlxManager::setCloseHook(win, &closeHook, &game);
+	MlxManager::startLoop(mlx);
 	return (0);
 }

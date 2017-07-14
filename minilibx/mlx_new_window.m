@@ -703,7 +703,7 @@ void	mlx_key_up(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
 {
 	[(id)(win_ptr->winid) setEvent:3 andFunc:funct_ptr andParam:param];
 }
-void	mlx_click_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+void	mlx_mouse_click_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
 {
 	[(id)(win_ptr->winid) setEvent:4 andFunc:funct_ptr andParam:param];
 }
