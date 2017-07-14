@@ -1,9 +1,9 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
-typedef struct s_input t_input;
+// typedef struct s_input t_input;
 
-class Player
+class Player : public GameData
 {
 public:
 	Player();
