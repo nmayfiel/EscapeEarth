@@ -11,13 +11,13 @@ Player::Player(void)
 
 void    Player::Player_move(t_input *input)
 {
-	if (input->k_up.ended_down)
+	if (input->k_up.ended_down && this->y > 0)
 		this->y -= this->speed;
-	if (input->k_down.ended_down)
+	if (input->k_down.ended_down && this->y < G_HEIGHT)
 		this->y += this->speed;
-	if (input->k_left.ended_down)
+	if (input->k_left.ended_down && this->x > 0)
 		this->x -= this->speed;
-	if (input->k_right.ended_down)
+	if (input->k_right.ended_down && this->x < G_WIDTH)
 		this->x += this->speed;
 }
 

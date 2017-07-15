@@ -1,10 +1,10 @@
 #ifndef PROJECTILE_HPP
 # define PROJECTILE_HPP
 
-// class Player;
-// class GameData;
+//  class Player;
+class GameData;
 
-class Projectile : public GameData
+class Projectile
 {
     public:
     Projectile();

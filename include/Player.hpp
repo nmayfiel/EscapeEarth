@@ -3,7 +3,11 @@
 
 // typedef struct s_input t_input;
 
-class Player : public GameData
+#include <iostream>
+#include <ctime>
+#include "input.hpp"
+
+class Player
 {
 public:
 	Player();

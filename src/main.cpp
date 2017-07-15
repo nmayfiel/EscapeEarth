@@ -1,3 +1,4 @@
+#include <iostream>
 #include "draw.hpp"
 #include "GameData.hpp"
 #include "Player.hpp"
@@ -78,20 +79,25 @@ int32_t		closeHook(void *gameptr)
 
 int32_t		gameLoop(void *gameptr)
 {
-	GameData *game;
+    char        *test;
+	GameData    *game;
+    Player      *p1;
+    Projectile  *bullet;
 
+    test = NULL;
 	game = static_cast<GameData *>(gameptr);
-	game->updateTime();
+    p1 = static_cast<Player *>(game->P1);
+    bullet = static_cast<Projectile *>(game->ammo);
+    game->updateTime();
 
 //NOTE(Anthony): Upated goes 1 when any change occurs in GameData.
 // After displaying the new image, upadted goes to 0
 
-	game->P1.Player_move(&game->input);
-    if (game->input.k_space.ended_down){
-        //game->ammo[game->nb_ammo].Projectile_create(game);
-        game->nb_ammo++;
+	p1->Player_move(&game->input);
+    if (game->input.k_space.ended_down && game->nb_ammo < LIM_AMMO){
+        bullet[game->nb_ammo].Projectile_create(game);
+        std::cout << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << std::endl;
     }
-    //game->P1.Player_shoot(&game->input, &game->ammo[game->nb_ammo], &game->nb_ammo);
     /*for(int i = 0; i < game->nb_ammo; i++)
         game->ammo[i].Projectile_move(&game->ammo);*/
 
@@ -99,8 +105,7 @@ int32_t		gameLoop(void *gameptr)
 
     // if (game->updated == 1){
 //	mlx_clear_window(game->mlx, game->win);
-	draw(game);
-	//draw(game);
+	draw(game, bullet, p1);
 	// }
 	// game->updated = 0;
 

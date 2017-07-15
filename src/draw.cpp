@@ -1,4 +1,5 @@
-#include "GameData.hpp"
+#include "draw.hpp"
+#include <sstream>
 
 void	putPixelToImage(Image *img, float x, float y)
 {
@@ -61,36 +62,37 @@ void	scaleImageToImage(Image *src, Image *dest)
 	}
 }
 
-void 	drawProjectiles(GameData *Game)
+void 	drawProjectiles(Image *src, Image *dst, float x, float y)
 {
-	for(int i = 0; i < LIM_AMMO ;i++){
-		appendImage(&Game->images[4], &Game->gameImage,
-			Game->ammo[i].x, Game->ammo[i].y);
-	}
+	appendImage(src, dst, x, y);
 }
 
 void    appendImage(Image *src, Image *dst, float x, float y)
 {
-    int8_t     *dbuff;
-    int8_t     *sbuff;
-    int         a = 0, b, i, si = 0, startx, starty = 0;
+    int32_t     *src_buff;
+    int32_t     *dst_buff;
+    int         di, si = 0;
 
-    dbuff = (int8_t *)dst->data;
-    sbuff = (int8_t *)src->data;
-    startx = x - src->width / 2;
-    starty = y - src->height / 2;
-    i = (src->width * starty) + startx;
-    while (a < src->height){
-        b = 0;
-        while (b < src->width){
-            dst[i] = src[si];
-            b++;
-            i++;
-            si++;
-        }
-        i += dst->width - src->width;
-        a++;
+    src_buff = (int32_t *)src->data;
+    dst_buff = (int32_t *)dst->data;
+    di = dst->width * y + (x - src->width / 2);
+    while (si < src->size_in_pixels)
+    {
+        if (si != 0 && si % src->width == 0)
+            di += dst->width - src->width;
+        if (!(src_buff[si] & 0xFF000000) && si < src->size_in_pixels
+            && di < dst->size_in_pixels)
+                dst_buff[di] = src_buff[si];
+        si++;
+        di++;
     }
+}
+
+void    drawplayer(Image *src, Image *dst, float x, float y)
+{
+
+    // NOTE(Anthony) : Do not touch
+    appendImage(src, dst, x, y);
 }
 
 void	drawBackground(Image *src, Image *dest, int yoffset)
@@ -112,17 +114,22 @@ void	drawBackground(Image *src, Image *dest, int yoffset)
 	}
 }
 
-void draw(GameData *game)
+void draw(GameData *game, Projectile *projectile, Player *player)
 {
 	static int offset = 0;
 	mlx_clear_window(game->mlx, game->win);
 	clear_image(&game->gameImage, 0x00990099);
 
 	drawBackground(&game->images[0], &game->gameImage, offset);
-    drawProjectiles(game);
-	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
-
-	scaleImageToImage(&game->gameImage, &game->winImage);
+    if (game->nb_ammo > -1){
+        for (int i = 0 ; i < game->nb_ammo ; i++){
+            std::cout << projectile[i].x << " " << projectile[i].y << std::endl;
+            drawProjectiles(&game->images[4], &game->gameImage, projectile[i].x, projectile[i].y);
+        }
+    }
+    drawplayer(&game->images[3], &game->gameImage, player->x, player->y);
+	putPixelToImage(&game->gameImage, player->x, player->y);
+    scaleImageToImage(&game->gameImage, &game->winImage);
 
 	mlx_put_image_to_window(game->mlx, game->win, game->winImage.ptr, game->winWidth / 2 - game->winImage.width / 2, game->winHeight / 2 - game->winImage.height / 2);
 

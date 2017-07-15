@@ -1,20 +1,14 @@
 #ifndef GAMEDATA_HPP
 # define GAMEDATA_HPP
 
-#include <iostream>
-#include <cstdio>
-#include <ctime>
-#include "Projectile.hpp"
-#include "helpers.hpp"
 #include "Clock.hpp"
 #include "input.hpp"
 #include "image.hpp"
 #include <string>
 #include <mlx.h>
-#include "draw.hpp"
-#include <mach/mach_time.h>
-#include <sstream>
 #include "Player.hpp"
+#include "helpers.hpp"
+#include "Projectile.hpp"
 
 class		GameData
 {
@@ -46,8 +40,8 @@ public:
 	Image gameImage;
 	Image winImage;
 	Image *images;
-	Player	P1;
-    Projectile ammo[LIM_AMMO];
+	void	*P1;
+    void    *ammo;
     int     nb_ammo;
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?
 

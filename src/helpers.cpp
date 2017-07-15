@@ -1,4 +1,5 @@
-#include "GameData.hpp"
+#include <mach/mach_time.h>
+#include "image.hpp"
 
 double		secondsPerFrame(uint64_t last, uint64_t current)
 {

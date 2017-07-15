@@ -9,19 +9,21 @@ const int32_t GameData::gameSpaceHeight = 1366;
 
 GameData::GameData(std::string winName, int32_t width, int32_t height)
 {
-	mlx = mlx_init();
+    Player      player;
+	Projectile  projectile[LIM_AMMO];
+    mlx = mlx_init();
 	char *cWinName = new char[winName.length()];
 	std::strcpy(cWinName, winName.c_str());
-	win = mlx_new_window(mlx, width, height, cWinName);
+    win = mlx_new_window(mlx, width, height, cWinName);
 	delete [] cWinName;
 
 	winWidth = width;
 	winHeight = height;
-	
+    P1 = &player;
+    ammo = &projectile;
 	clock = Clock();
 
 	input = (t_input){};
-
 	// set up game image
 	int gameSpaceWidth = 768;
 	int gameSpaceHeight = 1366;
@@ -37,7 +39,6 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	gameImage.size_in_bytes = gameImage.size_line * gameSpaceHeight;
 	gameImage.center.x = gameSpaceWidth / 2;
 	gameImage.center.y = gameSpaceHeight / 2;
-
 	int winImageWidth;
 	int winImageHeight;
 	if ((float)height / (float)width > aspectRatio)
@@ -62,7 +63,7 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	winImage.size_in_bytes = winImage.size_line * winImageHeight;
 	winImage.center.x = winImageWidth / 2;
 	winImage.center.y = winImageHeight / 2;
-    nb_ammo = 0;
+    nb_ammo = -1;
 }
 
 void	GameData::updateTime(void) { clock.tick(); }
