@@ -566,6 +566,37 @@ int get_mouse_button(NSEventType eventtype)
 
 }
 
+// Added by nmayfiel
+
+- (void) nix_gl_draw_img:(mlx_img_list_t *)img andCtx:(mlx_img_ctx_t *)imgctx andX:(int)x andY:(int)y andScale: (float[2])scale
+{
+	if (pixel_nb >0)
+		[self mlx_gl_draw];
+	
+	glUseProgram(glsl.image_program);
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, imgctx->texture);
+	glUniform1i(glsl.loc_image_texture, 0);
+	
+	glUniform2f(glsl.loc_image_winhalfsize, size_x/2, size_y/2);
+	glUniform2f(glsl.loc_image_pos, x, size_y - y);
+	glUniform2f(glsl.loc_image_size, img->width * scale[0], -img->height * scale[1]);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, imgctx->vbuffer);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), (void*)0);
+	glEnableVertexAttribArray(0);
+	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);  // src alpha 0xFF : keep dst
+	glBlendEquation(GL_FUNC_ADD);
+	
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glDisableVertexAttribArray(0);
+	
+}
+
+// End added by nmayfiel
 
 - (void) mlx_gl_draw_font:(mlx_img_list_t *)img andCtx:(mlx_img_ctx_t *)imgctx andX:(int)x andY:(int)y andColor:(int)color glyphX:(int)gx glyphY:(int)gy
 {

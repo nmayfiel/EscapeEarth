@@ -2,6 +2,7 @@
 # define IMAGE_HPP
 
 #include <stdint.h>
+#include "vec.hpp"
 
 typedef struct s_point
 {
@@ -21,6 +22,7 @@ struct		Image
 	int32_t	height;
 	int32_t	width;
 	t_point	center;
+	float2 scale;
 
 	void	getImageFromData(void *mlx, const uint8_t *imgData, uint32_t size);
 };

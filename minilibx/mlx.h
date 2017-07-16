@@ -81,6 +81,10 @@ int	mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
 */
 
 void	*mlx_new_image(void *mlx_ptr,int width,int height);
+// Added by nmayfiel
+void	*mlx_new_scaled_image(void *mlx_ptr, int width, int height, float xscale, float yscale);
+// end added
+
 /*
 **  return void *0 if failed
 */
@@ -92,6 +96,10 @@ char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
 */
 int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 				int x, int y);
+// Added by nmayfiel
+int	nix_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
+				int x, int y, float xscale, float yscale);
+// end added
 unsigned int	mlx_get_color_value(void *mlx_ptr, int color);
 
 

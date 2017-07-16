@@ -1,8 +1,7 @@
-bits 32 			; this is 32 bit assembly code
+bits 32
 
 section .rodata 		; read only section
 
-    ;; global varaibles to acces in our program
 global _image_one_start
 global _image_one_size
 global _image_two_start

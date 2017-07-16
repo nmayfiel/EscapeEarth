@@ -1,23 +1,22 @@
 #ifndef GAMEDATA_HPP
 # define GAMEDATA_HPP
 
+#include "vec.hpp"
 #include "Clock.hpp"
 #include "Player.hpp"
 #include "input.hpp"
 #include "image.hpp"
+#include "MlxManager.hpp"
 #include <string>
-#include <mlx.h>
 
 class		GameData
 {
 public:
-
-	GameData(void*& mlx, void*& win, Clock &c, int32_t width, int32_t height);
+	GameData(MlxManager &mlx, Clock &c, int2 &size);
 
 	void	updateTime(void);
 	double	currentTime(void);
 	void	setImages(Image *imgs);
-	void	setWidthHeight(int w, int h);
 	void	*getMlx(void);
 	void	*getWin(void);
 
@@ -25,14 +24,13 @@ public:
 	static const int32_t	gameSpaceWidth;
 	static const int32_t	gameSpaceHeight;
 
-	void	*mlx;
-	void	*win;
-	int32_t winWidth;
-	int32_t winHeight;
+	MlxManager &mlx;
 	Clock	clock;
+	vec2<int32_t> winSize;
+//	int32_t winWidth;
+//	int32_t winHeight;
 	t_input input;
 	Image gameImage;
-	Image winImage;
 	Image *images;
 	Player	P1;
 	

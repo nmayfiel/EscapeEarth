@@ -34,6 +34,29 @@ void    *mlx_new_image(mlx_ptr_t *mlx_ptr, int width, int height)
   return (newimg);
 }
 
+// Added by nmayfiel
+void	*mlx_new_scaled_image(mlx_ptr_t *mlx_ptr, int width, int height, float xscale, float yscale)
+{
+	mlx_img_list_t	*newimg;
+
+	if ((newimg = malloc(sizeof(*newimg))) == NULL)
+		return ((void *)0);
+	newimg->next = mlx_ptr->img_list;
+	mlx_ptr->img_list = newimg;
+	newimg->width = width;
+	newimg->height = height;
+	newimg->vertexes[0] = 0.0;  newimg->vertexes[1] = 0.0;
+	newimg->vertexes[2] = width * xscale;  newimg->vertexes[3] = 0.0;
+	newimg->vertexes[4] = width * xscale;  newimg->vertexes[5] = -height * yscale;
+	newimg->vertexes[6] = 0.0;  newimg->vertexes[7] = -height * yscale;
+	newimg->buffer = malloc(UNIQ_BPP*width*height);
+	bzero(newimg->buffer, UNIQ_BPP*width*height);
+	
+	return (newimg);
+}
+// end added
+
+
 mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
 {
   mlx_img_ctx_t	*imgctx;
@@ -92,6 +115,33 @@ void    mlx_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx
 
   win_ptr->nb_flush ++;
 }
+
+
+// added by nmayfiel
+void	nix_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_img_list_t *img_ptr, int x, int y, float xscale, float yscale)
+{
+	mlx_img_ctx_t	*imgctx;
+	float scale[2] = {xscale, yscale};
+	
+	if (!win_ptr->pixmgt)
+		return ;
+	
+	[(id)(win_ptr->winid) selectGLContext];
+	imgctx = add_img_to_ctx(img_ptr, win_ptr);
+	
+	// update texture
+	glBindTexture(GL_TEXTURE_2D, imgctx->texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_ptr->width, img_ptr->height, 0,
+		     GL_BGRA, GL_UNSIGNED_BYTE, img_ptr->buffer);
+	
+	[(id)(win_ptr->winid) nix_gl_draw_img:img_ptr andCtx:imgctx andX:x andY:y andScale: scale];
+	
+	win_ptr->nb_flush ++;
+	
+}
+// end added
+
+
 
 // assume here 32bpp little endian
 

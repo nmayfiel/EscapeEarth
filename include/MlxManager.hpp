@@ -6,15 +6,21 @@
 
 struct MlxManager
 {
-	static void	*init(void);
-	static void	*newWindow(void *mlxPtr, int width, int height, const std::string name);
-	static void	setKeyDownHook(void *win, int (*f)(int, void *), void *data);
-	static void	setKeyUpHook(void *win, int (*f)(int, void *), void *data);
-	static void	setLoopHook(void *mlx, int (*f)(void *), void *data);
-	static void	setCloseHook(void *win, int (*f)(void *), void *data);
-	static void	setMouseMoveHook(void *win, int (*f)(int, int, int, void*), void *data);
-	static void	setMouseClickHook(void *win, int (*f)(int, int, int, void*), void *data);
-	static void	startLoop(void *mlx);
+private:
+	void *mlx;
+	void *win;
+public:
+	void	init(void);
+	void	newWindow(int width, int height, const std::string name);
+	void	*&getMlx(void);
+	void	*&getWin(void);
+	void	setKeyDownHook(int (*f)(int, void *), void *data);
+	void	setKeyUpHook(int (*f)(int, void *), void *data);
+	void	setLoopHook(int (*f)(void *), void *data);
+	void	setCloseHook(int (*f)(void *), void *data);
+	void	setMouseMoveHook(int (*f)(int, int, int, void*), void *data);
+	void	setMouseClickHook(int (*f)(int, int, int, void*), void *data);
+	void	startLoop();
 };
 
 #endif

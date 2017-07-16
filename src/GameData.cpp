@@ -1,3 +1,4 @@
+#include "vec.hpp"
 #include "Clock.hpp"
 #include "GameData.hpp"
 #include <mlx.h>
@@ -8,16 +9,8 @@ const float GameData::aspectRatio = 16.0 / 9.0;
 const int32_t GameData::gameSpaceWidth = 768;
 const int32_t GameData::gameSpaceHeight = 1366;
 
-void	GameData::setWidthHeight(int w, int h)
+GameData::GameData(MlxManager &mlx, Clock &c, int2 &size): mlx(mlx), clock(c), winSize(size)
 {
-	winWidth = w;
-	winHeight = h;
-}
-
-GameData::GameData(void*& mlxptr, void*& winptr, Clock &c, int32_t width, int32_t height):
-	mlx(mlxptr), win(winptr), clock(c)
-{
-	setWidthHeight(width, height);
 	input = (t_input){};
 
 	// set up game image
@@ -26,41 +19,29 @@ GameData::GameData(void*& mlxptr, void*& winptr, Clock &c, int32_t width, int32_
 	gameImage = (Image){};
 	gameImage.width = gameSpaceWidth;
 	gameImage.height = gameSpaceHeight;
-	gameImage.ptr = mlx_new_image(mlx, gameSpaceWidth, gameSpaceHeight);
+
+	float xscale;
+	float yscale;
+	if ((float)winSize.x / (float)winSize.y > aspectRatio)
+	{
+		xscale = (float)gameSpaceWidth / (float)winSize.x;
+		yscale = aspectRatio;
+	}
+	else
+	{
+		xscale = 1.0 / aspectRatio;
+		yscale = 1.0 / ((float)gameSpaceHeight / (float)winSize.y);
+	}
+	gameImage.scale = float2(xscale, yscale);
+	gameImage.ptr = mlx_new_scaled_image(mlx.getMlx(), gameSpaceWidth, gameSpaceHeight, xscale, yscale);
 	gameImage.data = (int8_t *)mlx_get_data_addr(gameImage.ptr,
 						     &gameImage.bpp,
 						     &gameImage.size_line,
 						     &gameImage.endian);
 	gameImage.size_in_pixels = gameSpaceWidth * gameSpaceHeight;
 	gameImage.size_in_bytes = gameImage.size_line * gameSpaceHeight;
-	gameImage.center.x = gameSpaceWidth / 2;
-	gameImage.center.y = gameSpaceHeight / 2;
-
-	int winImageWidth;
-	int winImageHeight;
-	if ((float)winHeight / (float)winWidth > aspectRatio)
-	{
-		winImageWidth = winWidth;
-		winImageHeight = (float)winWidth * aspectRatio;
-	}
-	else
-	{
-		winImageWidth = (float)winHeight / aspectRatio;
-		winImageHeight = winHeight;
-	}
-	winImage = (Image){};
-	winImage.width = winImageWidth;
-	winImage.height = winImageHeight;
-	winImage.ptr = mlx_new_image(mlx, winImageWidth, winImageHeight);
-	winImage.data = (int8_t *)mlx_get_data_addr(winImage.ptr,
-						     &winImage.bpp,
-						     &winImage.size_line,
-						     &winImage.endian);
-	winImage.size_in_pixels = winImageWidth * winImageHeight;
-	winImage.size_in_bytes = winImage.size_line * winImageHeight;
-	winImage.center.x = winImageWidth / 2;
-	winImage.center.y = winImageHeight / 2;
-
+	gameImage.center.x = ((float)gameSpaceWidth * gameImage.scale.x) / 2;
+	gameImage.center.y = ((float)gameSpaceHeight * gameImage.scale.y) / 2;
 }
 
 void	GameData::updateTime(void) { clock.tick(); }

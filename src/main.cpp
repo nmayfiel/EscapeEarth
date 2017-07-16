@@ -10,9 +10,9 @@
 
 extern const uint8_t image_one_start;
 extern const int32_t image_one_size;
-extern const uint8_t image_two_start;
+//extern const uint8_t image_two_start;
 extern const int32_t image_two_size;
-extern const uint8_t image_three_start;
+//extern const uint8_t image_three_start;
 extern const int32_t image_three_size;
 
 static void	change_key_state(t_key *key, bool is_down)
@@ -101,25 +101,29 @@ int32_t		gameLoop(void *gameptr)
 
 int	main(void)
 {
-	void *mlx = MlxManager::init();
-	void *win = MlxManager::newWindow(mlx, G_WIDTH, G_HEIGHT, "Escape EARTH");
+	MlxManager mlx;
 	Clock clock;
-	GameData game = GameData(mlx, win, clock, G_WIDTH, G_HEIGHT);
+	int2 size = int2(G_WIDTH, G_HEIGHT);
+
+	mlx.init();
+	mlx.newWindow(G_WIDTH, G_HEIGHT, "Escape EARTH");
+	GameData game = GameData(mlx, clock, size);
+//	GameData game = GameData(mlx.getMlx(), mlx.getWin(), clock, G_WIDTH, G_HEIGHT);
 
 	// TODO(nick): These images probably need to be std::vector
 	// 	maybe try to mess with images.asm to get them in a better format
 	// 	you may only need a pointer to the start, then a number for sizes
 	//	of each, then maybe an end, for a sanity check ?
 	Image *images = new Image[3];
-	images[0].getImageFromData(mlx, &image_one_start, image_one_size);
-	images[1].getImageFromData(mlx, &image_two_start, image_two_size);
-	images[2].getImageFromData(mlx, &image_three_start, image_three_size);
+	images[0].getImageFromData(mlx.getMlx(), &image_one_start, image_one_size);
+//	images[1].getImageFromData(mlx, &image_two_start, image_two_size);
+//	images[2].getImageFromData(mlx, &image_three_start, image_three_size);
 	game.setImages(images);
 
-	MlxManager::setKeyDownHook(win, &keyDownHook, &game.input);
-	MlxManager::setKeyUpHook(win, &keyUpHook, &game.input);
-	MlxManager::setLoopHook(mlx, &gameLoop, &game);
-	MlxManager::setCloseHook(win, &closeHook, &game);
-	MlxManager::startLoop(mlx);
+	mlx.setKeyDownHook(&keyDownHook, &game.input);
+	mlx.setKeyUpHook(&keyUpHook, &game.input);
+	mlx.setLoopHook(&gameLoop, &game);
+	mlx.setCloseHook(&closeHook, &game);
+	mlx.startLoop();
 	return (0);
 }
