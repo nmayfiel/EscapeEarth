@@ -22,15 +22,16 @@ GameData::GameData(MlxManager &mlx, Clock &c, int2 &size): mlx(mlx), clock(c), w
 
 	float xscale;
 	float yscale;
-	if ((float)winSize.x / (float)winSize.y > aspectRatio)
+	if ((float)winSize.y / (float)winSize.x > aspectRatio)
 	{
-		xscale = (float)gameSpaceWidth / (float)winSize.x;
-		yscale = aspectRatio;
+		xscale = 1.0 / ((float)gameSpaceWidth / (float)winSize.x);
+		yscale = xscale;
 	}
 	else
 	{
-		xscale = 1.0 / aspectRatio;
 		yscale = 1.0 / ((float)gameSpaceHeight / (float)winSize.y);
+		xscale = yscale;
+
 	}
 	gameImage.scale = float2(xscale, yscale);
 	gameImage.ptr = mlx_new_scaled_image(mlx.getMlx(), gameSpaceWidth, gameSpaceHeight, xscale, yscale);

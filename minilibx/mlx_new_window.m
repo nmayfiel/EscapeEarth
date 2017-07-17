@@ -110,8 +110,6 @@ int get_mouse_button(NSEventType eventtype)
   unsigned int val;
 
   flag = [theEvent modifierFlags];
-  //  printf("Key flag changed: %x => %x\n", keyflag, flag);
-  //  printf("**mlx flag low part : %d  - %x\n", flag&0xFFFF, flag&0xFFFF);
 
   if (!(val = (keyflag|flag)&(~(keyflag&flag))))
     return ;   // no change - can happen when loosing focus on special key pressed, then re-pressed later
@@ -122,32 +120,6 @@ int get_mouse_button(NSEventType eventtype)
     event_funct[2](0xFF+the_key, event_param[2]);
   if (flag < keyflag && event_funct[3] != NULL)
     event_funct[3](0xFF+the_key, event_param[3]);
-  /*
-  if (event_funct[2] != NULL)
-    {
-      if (!(keyflag & NSAlphaShiftKeyMask) && (flag&NSAlphaShiftKeyMask)) event_funct[2](0xFF+1, event_param[2]);
-      if (!(keyflag & NSShiftKeyMask) && (flag&NSShiftKeyMask)) event_funct[2](0xFF+2, event_param[2]);
-      if (!(keyflag & NSControlKeyMask) && (flag&NSControlKeyMask)) event_funct[2](0xFF+3, event_param[2]);
-      if (!(keyflag & NSAlternateKeyMask) && (flag&NSAlternateKeyMask)) event_funct[2](0xFF+4, event_param[2]);
-      if (!(keyflag & NSCommandKeyMask) && (flag&NSCommandKeyMask)) event_funct[2](0xFF+5, event_param[2]);
-      if (!(keyflag & NSNumericPadKeyMask) && (flag&NSNumericPadKeyMask)) event_funct[2](0xFF+6, event_param[2]);
-      if (!(keyflag & NSHelpKeyMask) && (flag&NSHelpKeyMask)) event_funct[2](0xFF+7, event_param[2]);
-      if (!(keyflag & NSFunctionKeyMask) && (flag&NSFunctionKeyMask)) event_funct[2](0xFF+8, event_param[2]);
-    }
-  if (event_funct[3] != NULL)
-    {
-      if ((keyflag & NSShiftKeyMask) && !(flag&NSShiftKeyMask)) event_funct[3](NSShiftKeyMask, event_param[3]);
-
-      if ((keyflag & NSAlphaShiftKeyMask) && !(flag&NSAlphaShiftKeyMask)) event_funct[3](0xFF+1, event_param[3]);
-      if ((keyflag & NSShiftKeyMask) && !(flag&NSShiftKeyMask)) event_funct[3](0xFF+2, event_param[3]);
-      if ((keyflag & NSControlKeyMask) && !(flag&NSControlKeyMask)) event_funct[3](0xFF+3, event_param[3]);
-      if ((keyflag & NSAlternateKeyMask) && !(flag&NSAlternateKeyMask)) event_funct[3](0xFF+4, event_param[3]);
-      if ((keyflag & NSCommandKeyMask) && !(flag&NSCommandKeyMask)) event_funct[3](0xFF+5, event_param[3]);
-      if ((keyflag & NSNumericPadKeyMask) && !(flag&NSNumericPadKeyMask)) event_funct[3](0xFF+6, event_param[3]);
-      if ((keyflag & NSHelpKeyMask) && !(flag&NSHelpKeyMask)) event_funct[3](0xFF+7, event_param[3]);
-      if ((keyflag & NSFunctionKeyMask) && !(flag&NSFunctionKeyMask)) event_funct[3](0xFF+8, event_param[3]);
-    }
-  */
   keyflag = flag;
 }
 
@@ -155,19 +127,14 @@ int get_mouse_button(NSEventType eventtype)
 {
   if (keyrepeat==0 && [theEvent isARepeat])
     return ;
-  //  printf("Key Down: %d\n", [theEvent keyCode]);
   if (event_funct[2] != NULL)
     event_funct[2]([theEvent keyCode], event_param[2]);
-  //  else [super keyDown: theEvent];
 }
 
 - (void) keyUp:(NSEvent *)theEvent
 {
-  //  printf("Key Up: %d\n", [theEvent keyCode]);
   if (event_funct[3] != NULL)
     event_funct[3]([theEvent keyCode], event_param[3]);
-  //  else [super keyUp: theEvent];
-
 }
 
 - (void) mouseDown:(NSEvent *)theEvent
@@ -177,7 +144,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse pressed bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[4] != NULL)
     event_funct[4](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[4]);
 }
@@ -189,7 +155,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse pressed bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[4] != NULL)
     event_funct[4](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[4]);
 }
@@ -201,7 +166,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse pressed bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[4] != NULL)
     event_funct[4](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[4]);
 }
@@ -213,7 +177,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse release bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[5] != NULL)
     event_funct[5](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[5]);
 }
@@ -225,7 +188,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse release bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[5] != NULL)
     event_funct[5](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[5]);
 }
@@ -237,7 +199,6 @@ int get_mouse_button(NSEventType eventtype)
 
   thepoint = [theEvent locationInWindow];
   button = get_mouse_button([theEvent type]);
-  //  printf("Mouse release bt %d  pos: %f, %f\n", button, thepoint.x, thepoint.y);
   if (event_funct[5] != NULL)
     event_funct[5](button, (int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[5]);
 }
@@ -247,7 +208,6 @@ int get_mouse_button(NSEventType eventtype)
   NSPoint thepoint;
 
   thepoint = [theEvent locationInWindow];
-  //  printf("Mouse moved  pos: %f, %f\n", thepoint.x, thepoint.y);
   if (event_funct[6] != NULL)
     event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
 }
@@ -258,7 +218,6 @@ int get_mouse_button(NSEventType eventtype)
   NSPoint thepoint;
 
   thepoint = [theEvent locationInWindow];
-  //  printf("Mouse moved  pos: %f, %f\n", thepoint.x, thepoint.y);
   if (event_funct[6] != NULL)
     event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
 }
@@ -269,7 +228,6 @@ int get_mouse_button(NSEventType eventtype)
   NSPoint thepoint;
 
   thepoint = [theEvent locationInWindow];
-  //  printf("Mouse moved  pos: %f, %f\n", thepoint.x, thepoint.y);
   if (event_funct[6] != NULL)
     event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
 }
@@ -280,7 +238,6 @@ int get_mouse_button(NSEventType eventtype)
   NSPoint thepoint;
 
   thepoint = [theEvent locationInWindow];
-  //  printf("Mouse moved  pos: %f, %f\n", thepoint.x, thepoint.y);
   if (event_funct[6] != NULL)
     event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
 }
@@ -312,12 +269,23 @@ int get_mouse_button(NSEventType eventtype)
 }
 
 
+// Added by nmayfiel
+- (NSSize)windowWillResize:(NSWindow*)window
+                    toSize:(NSSize)frameSize
+{
+	NSRect contentRect = [window contentRectForFrameRect: window.frame];
+	int x = contentRect.size.width;
+	int y = contentRect.size.height;
+	if (event_funct[18] != NULL)
+		event_funct[18](x, y, event_param[18]);
+	return (frameSize);
+}
+// end added
+
 - (void) exposeNotification:(NSNotification *)note
 {
-  //    printf("Expose...\n");
     if (event_funct[12] != NULL)
       event_funct[12](event_param[12]);
-    //    printf("Expose done.\n");
 }
 
 - (void) closeNotification:(NSNotification *)note
@@ -328,8 +296,6 @@ int get_mouse_button(NSEventType eventtype)
 
 - (void) deminiaturizeNotification:(NSNotification *)note
 {
-  //  if (event_funct[??] != NULL)
-  //    event_funct[??](event_param[??]);
   [self exposeNotification:note];
 }
 @end
@@ -343,22 +309,20 @@ int get_mouse_button(NSEventType eventtype)
 
   if ((self = [super initWithFrame:rect pixelFormat:pixFmt]) != nil)
     {
-      NSUInteger windowStyle = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
+      NSUInteger windowStyle = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
       
       win = [[NSWindowEvent alloc] initWithContentRect:rect
 				   styleMask:windowStyle
 				   backing:NSBackingStoreBuffered   // NSBackingStoreNonretained
 				   defer:NO];
       [win setContentView:self];
+      // Added by nmayfiel
+      [[win contentView] setAutoresizesSubviews: YES];
+      [win setMinSize: NSMakeSize(10, 10)];
+      // End added
       [win setTitle:title];
       [win setKeyRepeat:1];
       [win makeKeyAndOrderFront:self];
-
-      //      printf("init ctx: current %p ", [NSOpenGLContext currentContext]);
-
-      //      ctx = [[NSOpenGLContext alloc] initWithFormat:pixFmt shareContext:[NSOpenGLContext currentContext]]; //other_context];
-      //      [ctx setView:self];
-      //      [ctx makeCurrentContext];
 
       [[self openGLContext] makeCurrentContext];
       [[self openGLContext] setView:self];
@@ -366,13 +330,9 @@ int get_mouse_button(NSEventType eventtype)
 
       [self setNextKeyView:self];
 
-      //      [[NSNotificationCenter defaultCenter] addObserver:win selector:@selector(exposeNotification:) name:@"NSWindowDidExposeNotification" object:nil];
       [[NSNotificationCenter defaultCenter] addObserver:win selector:@selector(exposeNotification:) name:@"NSWindowDidBecomeKeyNotification" object:win];
       [[NSNotificationCenter defaultCenter] addObserver:win selector:@selector(deminiaturizeNotification:) name:@"NSWindowDidDeminiaturizeNotification" object:win];
       [[NSNotificationCenter defaultCenter] addObserver:win selector:@selector(closeNotification:) name:@"NSWindowWillCloseNotification" object:win];
-      // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ctxNeedsUpdate:)
-      //				    name:NSViewGlobalFrameDidChangeNotification
-      //				    object:nil];
 
       size_x = rect.size.width;
       size_y = rect.size.height;
@@ -380,20 +340,6 @@ int get_mouse_button(NSEventType eventtype)
       glClearColor(0, 0, 0, 0);
       glClear(GL_COLOR_BUFFER_BIT);
       glFlush();
-
-      //[win makeKeyAndOrderFront:nil];
-      // BOOL r = [win isKeyWindow];
-      //  if (r==YES) printf("keywindow ok\n"); else printf("keywindow KO\n");
-
-      // Window controller subclass to set title
-      // NSWindowController* windowController = [[NSWindowController alloc] initWithWindow:win];
-      // [windowController windowTitleForDocumentDisplayName:title];
-      // [windowController showWindow:nil];
-      // MlxWinController *mlxWinCont = [[MlxWinController alloc] initWin:win andTitle:title];
-
-      // after nswindowcontroller who will retake first responder
-      //      BOOL r = [win makeFirstResponder:nil];
-      //      if (r==YES) printf("responder ok\n"); else printf("responder KO\n");
 
       [pixFmt release];
     }
@@ -407,9 +353,7 @@ int get_mouse_button(NSEventType eventtype)
   glDisable(GL_DEPTH_TEST);
   glGenBuffers(1, &pixel_vbuffer);
   glBindBuffer(GL_ARRAY_BUFFER, pixel_vbuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(pixel_vertexes), pixel_vertexes, GL_DYNAMIC_DRAW); // 4 points buff
-  // pixel_ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-
+  glBufferData(GL_ARRAY_BUFFER, sizeof(pixel_vertexes), pixel_vertexes, GL_DYNAMIC_DRAW);
   glGenTextures(1, &pixel_texture);
   glBindTexture(GL_TEXTURE_2D, pixel_texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -427,25 +371,22 @@ int get_mouse_button(NSEventType eventtype)
 	       GL_BGRA, GL_UNSIGNED_BYTE,   /* external format, type */
 	       pixtexbuff                   /* pixels */
 	       );
-  //      printf("pix tex err? 0x%x\n", glGetError());
-
+ 
   if (mlx_shaders(&glsl))
     return (0);
 
   glUseProgram(glsl.pixel_program);
   glsl.loc_pixel_texture = glGetUniformLocation(glsl.pixel_program, "texture");
-  //glsl.loc_pixel_winhalfsize = glGetUniformLocation(glsl.pixel_program, "winhalfsize");
+ 
   glsl.loc_pixel_position = glGetAttribLocation(glsl.pixel_program, "position");
-  //      printf("err? 0x%x\n", glGetError());
-
+ 
   glUseProgram(glsl.image_program);
   glsl.loc_image_texture = glGetUniformLocation(glsl.image_program, "texture");
   glsl.loc_image_pos = glGetUniformLocation(glsl.image_program, "imagepos");
   glsl.loc_image_size = glGetUniformLocation(glsl.image_program, "imagesize");
   glsl.loc_image_winhalfsize = glGetUniformLocation(glsl.image_program, "winhalfsize");
   glsl.loc_image_position = glGetAttribLocation(glsl.image_program, "position");
-  //      printf("err? 0x%x\n", glGetError());
-
+ 
   glUseProgram(glsl.font_program);
   glsl.loc_font_texture = glGetUniformLocation(glsl.font_program, "texture");
   glsl.loc_font_color = glGetUniformLocation(glsl.font_program, "color");
@@ -454,15 +395,13 @@ int get_mouse_button(NSEventType eventtype)
   glsl.loc_font_atlassize = glGetUniformLocation(glsl.font_program, "fontatlassize");
   glsl.loc_font_winhalfsize = glGetUniformLocation(glsl.font_program, "winhalfsize");
   glsl.loc_font_position = glGetAttribLocation(glsl.font_program, "position");
-  //      printf("err? 0x%x\n", glGetError());
-
+ 
   glFlush();
   return (1);
 }
 
 - (void) ctxNeedsUpdate
 {
-  // printf("Context update\n");
   [ctx update];
 }
 
@@ -470,7 +409,6 @@ int get_mouse_button(NSEventType eventtype)
 {
   if ([NSOpenGLContext currentContext] != [self openGLContext])
     {
-      //      printf("ctx: %p => %p\n", [NSOpenGLContext currentContext], [self openGLContext]);
       [[self openGLContext] makeCurrentContext];
     }
 }
@@ -516,7 +454,6 @@ int get_mouse_button(NSEventType eventtype)
 {
   [[NSNotificationCenter defaultCenter] removeObserver:win];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  // [ctx release];
   [win close];
   [self release];
 }
@@ -664,6 +601,22 @@ int get_mouse_button(NSEventType eventtype)
   
 }
 
+// Added by nmayfiel
+
+- (void)reshape
+{
+	[super reshape];
+
+	NSRect bounds = [self bounds];
+	size_x = bounds.size.width;
+	size_y = bounds.size.height;
+	[[self openGLContext] makeCurrentContext];
+	[[self openGLContext] update];
+	glViewport(0, 0, bounds.size.width, bounds.size.height);
+}
+// end added
+
+
 @end
 
 
@@ -682,6 +635,7 @@ void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
   newwin->nb_flush = 0;
   newwin->pixmgt = 1;
   mlx_ptr->win_list = newwin;
+  
 
   NSRect windowRect = NSMakeRect(100, 100, size_x, size_y);
   str = [NSString stringWithCString:title encoding:NSASCIIStringEncoding];
@@ -745,6 +699,11 @@ void    mlx_mouse_moved_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *
 void	mlx_close_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
 {
 	[(id)(win_ptr->winid) setEvent:17 andFunc:funct_ptr andParam:param];
+}
+
+void	mlx_resize_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+{
+	[(id)(win_ptr->winid) setEvent:18 andFunc:funct_ptr andParam:param];
 }
 // End added by nmayfiel
 
@@ -811,7 +770,6 @@ int     mlx_destroy_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_to_del)
   [(id)(win_to_del->winid) destroyMe];
   free(win_to_del);
 
-  //  printf("destroy window done.\n");
   mlx_do_sync(mlx_ptr);
   return (0);
 }

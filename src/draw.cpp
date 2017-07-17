@@ -69,7 +69,6 @@ void	drawBackground(Image *src, Image *dest, int yoffset)
 	
 	dbuff = (int32_t *)dest->data;
 	sbuff = (int32_t *)src->data;
-// get the starting y value for the value
 	yoffset %= src->height;
 	yoffset = src->height - yoffset;
 	int si = src->width * yoffset - 1;
@@ -91,8 +90,6 @@ void draw(GameData *game)
 
 	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
 
-	//scaleImageToImage(&game->gameImage, &game->winImage);
-
 	nix_put_image_to_window(game->mlx.getMlx(), game->mlx.getWin(), game->gameImage.ptr, game->winSize.x / 2 - game->gameImage.center.x, game->winSize.y / 2 - game->gameImage.center.y, game->gameImage.scale.x, game->gameImage.scale.y);
 
 	std::stringstream framerate;
@@ -100,7 +97,6 @@ void draw(GameData *game)
 	std::string framestr = framerate.str();
 	char *framecstr = new char[framestr.length()];
 	std::strcpy(framecstr, framestr.c_str());
-	mlx_string_put(game->mlx.getMlx(), game->mlx.getWin(), G_WIDTH - 120, G_HEIGHT - 30, 0x00EEEEEE, framecstr);
+	mlx_string_put(game->mlx.getMlx(), game->mlx.getWin(), game->winSize.x - 120, game->winSize.y - 30, 0x00EEEEEE, framecstr);
 	offset++;
-	//mlx_put_image_to_window(game->mlx, game->win, game->images[0].ptr, 0, 0);
 }
