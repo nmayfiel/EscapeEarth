@@ -97,6 +97,6 @@ void draw(GameData *game)
 	std::string framestr = framerate.str();
 	char *framecstr = new char[framestr.length()];
 	std::strcpy(framecstr, framestr.c_str());
-	mlx_string_put(game->mlx.getMlx(), game->mlx.getWin(), G_WIDTH - 120, G_HEIGHT - 30, 0x00EEEEEE, framecstr);
+	mlx_string_put(game->mlx.getMlx(), game->mlx.getWin(), game->winSize.x - 120, game->winSize.y - 30, 0x00EEEEEE, framecstr);
 	offset++;
 }

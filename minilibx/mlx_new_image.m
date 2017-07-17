@@ -2,6 +2,7 @@
 //
 // by Ol
 //
+// Heavily modified by nmayfiel
 
 
 #import <Cocoa/Cocoa.h>
@@ -16,8 +17,6 @@ void    *mlx_new_image(mlx_ptr_t *mlx_ptr, int width, int height)
 {
   mlx_img_list_t        *newimg;
 
-  //  if (mlx_ptr->win_list == NULL)
-  //    return (NULL);  // need at leat one window created to have openGL context and create texture
   if ((newimg = malloc(sizeof(*newimg))) == NULL)
     return ((void *)0);
   newimg->next = mlx_ptr->img_list;
@@ -88,8 +87,7 @@ mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
 	  );
   glGenBuffers(1, &(imgctx->vbuffer));
   glBindBuffer(GL_ARRAY_BUFFER, imgctx->vbuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(img->vertexes), img->vertexes, GL_DYNAMIC_DRAW); // 4 points buff
-
+  glBufferData(GL_ARRAY_BUFFER, sizeof(img->vertexes), img->vertexes, GL_DYNAMIC_DRAW);
   return (imgctx);
 }
 
@@ -104,7 +102,6 @@ void    mlx_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx
   [(id)(win_ptr->winid) selectGLContext];
   imgctx = add_img_to_ctx(img_ptr, win_ptr);
 
-  // update texture
   glBindTexture(GL_TEXTURE_2D, imgctx->texture);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_ptr->width, img_ptr->height, 0,
 	       GL_BGRA, GL_UNSIGNED_BYTE, img_ptr->buffer);
@@ -133,7 +130,6 @@ void	nix_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_im
 
 	imgctx = add_img_to_ctx(img_ptr, win_ptr);
 	
-	// update texture
 	glBindTexture(GL_TEXTURE_2D, imgctx->texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_ptr->width, img_ptr->height, 0,
 		     GL_BGRA, GL_UNSIGNED_BYTE, img_ptr->buffer);
@@ -183,7 +179,6 @@ int mlx_string_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, in
 	{
 	  gX = (FONT_WIDTH+2)*(*string-32);
 	  gY = 0;
-	  //      printf("put char %c pos %d %d\n", *string, gX, gY);
 	  [(id)(win_ptr->winid) mlx_gl_draw_font:mlx_ptr->font andCtx:imgctx andX:x andY:y andColor:color glyphX:gX glyphY:gY];
 	  x += FONT_WIDTH;
 	}
@@ -241,6 +236,5 @@ int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
   free(img_todel->buffer);
   free(img_todel);
 
-  //  printf("destroy image done.\n");
   return (0);
 }

@@ -273,8 +273,9 @@ int get_mouse_button(NSEventType eventtype)
 - (NSSize)windowWillResize:(NSWindow*)window
                     toSize:(NSSize)frameSize
 {
-	int x = frameSize.width;
-	int y = frameSize.height;
+	NSRect contentRect = [window contentRectForFrameRect: window.frame];
+	int x = contentRect.size.width;
+	int y = contentRect.size.height;
 	if (event_funct[18] != NULL)
 		event_funct[18](x, y, event_param[18]);
 	return (frameSize);
