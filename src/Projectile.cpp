@@ -26,14 +26,14 @@ void        Projectile::Projectile_move(GameData *game)
         for(int i = 0; i < game->nb_ammo; i++){
             if (bullets[i].is_alive)
                 bullets[i].y -= (bullets[i].id > 0 ? -bullets[i].velocity : bullets[i].velocity);
-            std::cout << i << "--- Moving Projectiles ---" << std::endl;
-            std::cout << player->x << " " << bullets[i].x << std::endl;
-            std::cout << player->y << " " << bullets[i].y << std::endl;
+            //std::cout << i << "--- Moving Projectiles ---" << std::endl;
+            //std::cout << player->x << " " << bullets[i].x << std::endl;
+            //std::cout << player->y << " " << bullets[i].y << std::endl;
 
         }
 }
 
-void        Projectile::Projectile_set(GameData *game, int i)
+void        Projectile::Projectile_set(GameData *game, int i, int state, int id_obj)
 {
     Projectile      *bullets;
     Player          *player;
@@ -42,11 +42,11 @@ void        Projectile::Projectile_set(GameData *game, int i)
     player = static_cast<Player *>(game->P1);
     bullets[i].x = player->x;
     bullets[i].y = player->y;
-    bullets[i].velocity = 3.0f;
+    bullets[i].velocity = (state == 1) ? 3.0f : 0;
     bullets[i].damage = player->damage;
     //ammo.tx_index = tx_index;
-    bullets[i].is_alive = 1;
-    bullets[i].id = player->id;
+    bullets[i].is_alive = state;
+    bullets[i].id = id_obj;
 }
 
 Projectile::~Projectile(void)

@@ -21,7 +21,7 @@ class Projectile
     //Texture tx[]
     //int   tx_index;
     void        Projectile_move(GameData *game);
-    void        Projectile_set(GameData *game, int i);
+    void        Projectile_set(GameData *game, int i, int state, int id_src);
 };
 
 #endif

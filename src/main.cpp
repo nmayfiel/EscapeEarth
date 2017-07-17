@@ -81,6 +81,7 @@ int32_t		gameLoop(void *gameptr)
 {
     char        *test;
 	GameData    *game;
+    float       offset;
     Player      *p1;
     Projectile  *bullet;
 
@@ -89,31 +90,36 @@ int32_t		gameLoop(void *gameptr)
     p1 = static_cast<Player *>(game->P1);
     bullet = static_cast<Projectile *>(game->ammo);
     game->updateTime();
-
+    offset = (game->images[5].width / 2);
 //NOTE(Anthony): Upated goes 1 when any change occurs in GameData.
 // After displaying the new image, upadted goes to 0
 
-	p1->Player_move(&game->input);
+    if (p1->x > offset && p1->y > offset && p1->x < G_WIDTH - offset && p1->y < G_HEIGHT - offset)
+	    p1->Player_move(&game->input);
     //std::cout << "---  before projectile set loop   ---" << std::endl;
     if (game->input.k_space.ended_down){
         for (int i = 0; i < LIM_AMMO; i++){
             if (i == game->nb_ammo){
                 game->nb_ammo++;
-                bullet[i].Projectile_set(game, i);
-                std::cout << i << bullet[i].x << bullet[i].y << game->nb_ammo << std::endl;
-                break;
-            }
-            if (bullet[i].is_alive == 0){
-                bullet[i].Projectile_set(game, i);
+                bullet[i].Projectile_set(game, i, 1, p1->id);
                 //std::cout << i << bullet[i].x << bullet[i].y << game->nb_ammo << std::endl;
                 break;
             }
-            std::cout << game->nb_ammo << "-" << i << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << " main.cpp" << std::endl;
+            if (bullet[i].is_alive == 0){
+                bullet[i].Projectile_set(game, i, 1, p1->id);
+                //std::cout << i << bullet[i].x << bullet[i].y << game->nb_ammo << std::endl;
+                break;
+            }
+            //std::cout << game->nb_ammo << "-" << i << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << " main.cpp" << std::endl;
         }
     }
     for(int i = 0; i < LIM_AMMO; i++){
-        if (bullet[i].is_alive == 1)
-            bullet[i].Projectile_move(game);
+        if (bullet[i].is_alive == 1 || game->nb_ammo == 0){
+            if (bullet[i].x < 0 || bullet[i].x > G_WIDTH || bullet[i].y < 0 || bullet[i].y > G_HEIGHT)
+                bullet[i].Projectile_set(game, i, 0, p1->id);
+            else
+                bullet[i].Projectile_move(game);
+        }
             //break;
     }
 

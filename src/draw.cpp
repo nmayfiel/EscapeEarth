@@ -127,14 +127,15 @@ void draw(GameData *game, Projectile *projectile, Player *player)
     //std::cout << "--------------------------------------" << std::endl;
         for (int i = 0 ; i < game->nb_ammo ; i++){
             if (projectile[i].is_alive == 1){
-            std::cout << i << "nb_ammo:" << game->nb_ammo << " - Projectile coords = " << projectile[i].x << " " << projectile[i].y << " draw.cpp" << std::endl;
             if (projectile[i].x > 0 && projectile[i].x < G_WIDTH && projectile[i].y > 0 && projectile[i].y < G_HEIGHT)
                 drawProjectiles(&game->images[4], &game->gameImage, projectile[i].x, projectile[i].y);
-           /* else
+            //std::cout << i << "nb_ammo:" << game->nb_ammo << " - Projectile coords = " << projectile[i].x << " " << projectile[i].y << " draw.cpp" << std::endl;
+            /* else
                 destroy_projectile();*/
             //putPixelToImage(&game->gameImage, projectile[i].x, projectile[i].y);
             }
         }
+
     drawplayer(&game->images[3], &game->gameImage, player->x, player->y);
     putPixelToImage(&game->gameImage, player->x, player->y);
     scaleImageToImage(&game->gameImage, &game->winImage);
