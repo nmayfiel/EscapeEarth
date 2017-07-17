@@ -20,6 +20,7 @@ public:
 	void	setCloseHook(int (*f)(void *), void *data);
 	void	setMouseMoveHook(int (*f)(int, int, int, void*), void *data);
 	void	setMouseClickHook(int (*f)(int, int, int, void*), void *data);
+	void	setResizeHook(int (*f)(int, int, void*), void *data);
 	void	startLoop();
 };
 

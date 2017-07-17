@@ -93,6 +93,7 @@ void draw(GameData *game)
 
 	//scaleImageToImage(&game->gameImage, &game->winImage);
 
+//	nix_put_image_to_window(game->mlx.getMlx(), game->mlx.getWin(), game->gameImage.ptr, game->gameImage.scale.x, game->gameImage.scale.y);
 	nix_put_image_to_window(game->mlx.getMlx(), game->mlx.getWin(), game->gameImage.ptr, game->winSize.x / 2 - game->gameImage.center.x, game->winSize.y / 2 - game->gameImage.center.y, game->gameImage.scale.x, game->gameImage.scale.y);
 
 	std::stringstream framerate;

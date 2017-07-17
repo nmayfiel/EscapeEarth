@@ -65,7 +65,7 @@ mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
   while (imgctx)
     {
       if (imgctx->img == img)
-	return (imgctx);
+	      return (imgctx);
       imgctx = imgctx->next;
     }
 
@@ -73,7 +73,6 @@ mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
   imgctx->img = img;
   imgctx->next = win->img_list;
   win->img_list = imgctx;
-
   glGenTextures(1, &(imgctx->texture));
   glBindTexture(GL_TEXTURE_2D, imgctx->texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -81,13 +80,12 @@ mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
   glTexImage2D(
-	       GL_TEXTURE_2D, 0,           /* target, level of detail */
-	       GL_RGBA8,                    /* internal format */
-	       img->width, img->height, 0,           /* width, height, border */
-	       GL_BGRA, GL_UNSIGNED_BYTE,   /* external format, type */
-	       img->buffer               /* pixels */
-	       );
-
+	  GL_TEXTURE_2D, 0,           /* target, level of detail */
+	  GL_RGBA8,                    /* internal format */
+	  img->width, img->height, 0,           /* width, height, border */
+	  GL_BGRA, GL_UNSIGNED_BYTE,   /* external format, type */
+	  img->buffer               /* pixels */
+	  );
   glGenBuffers(1, &(imgctx->vbuffer));
   glBindBuffer(GL_ARRAY_BUFFER, imgctx->vbuffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(img->vertexes), img->vertexes, GL_DYNAMIC_DRAW); // 4 points buff
@@ -118,6 +116,7 @@ void    mlx_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx
 
 
 // added by nmayfiel
+
 void	nix_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_img_list_t *img_ptr, int x, int y, float xscale, float yscale)
 {
 	mlx_img_ctx_t	*imgctx;
@@ -127,13 +126,20 @@ void	nix_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_im
 		return ;
 	
 	[(id)(win_ptr->winid) selectGLContext];
+	img_ptr->vertexes[0] = 0.0;  img_ptr->vertexes[1] = 0.0;
+	img_ptr->vertexes[2] = img_ptr->width * xscale;  img_ptr->vertexes[3] = 0.0;
+	img_ptr->vertexes[4] = img_ptr->width * xscale;  img_ptr->vertexes[5] = -img_ptr->height * yscale;
+	img_ptr->vertexes[6] = 0.0;  img_ptr->vertexes[7] = -img_ptr->height * yscale;
+
 	imgctx = add_img_to_ctx(img_ptr, win_ptr);
 	
 	// update texture
 	glBindTexture(GL_TEXTURE_2D, imgctx->texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_ptr->width, img_ptr->height, 0,
 		     GL_BGRA, GL_UNSIGNED_BYTE, img_ptr->buffer);
-	
+	glBindBuffer(GL_ARRAY_BUFFER, imgctx->vbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(img_ptr->vertexes), img_ptr->vertexes, GL_DYNAMIC_DRAW); 
+
 	[(id)(win_ptr->winid) nix_gl_draw_img:img_ptr andCtx:imgctx andX:x andY:y andScale: scale];
 	
 	win_ptr->nb_flush ++;

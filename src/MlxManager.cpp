@@ -46,4 +46,9 @@ void	MlxManager::setMouseClickHook(int (*f)(int, int, int, void *), void *data)
 	mlx_mouse_click_hook(win, f, data);
 }
 
+void	MlxManager::setResizeHook(int (*f)(int, int, void *), void *data)
+{
+	mlx_resize_hook(win, f, data);
+}
+
 void	MlxManager::startLoop(void){ mlx_loop(mlx);}
