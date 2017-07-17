@@ -135,7 +135,7 @@ void draw(GameData *game, Projectile *projectile, Player *player)
             //putPixelToImage(&game->gameImage, projectile[i].x, projectile[i].y);
             }
         }
-    drawplayer(&game->images[3], &game->gameImage, player->x, player->y);
+   //drawplayer(&game->images[3], &game->gameImage, player->x, player->y);
     putPixelToImage(&game->gameImage, player->x, player->y);
     scaleImageToImage(&game->gameImage, &game->winImage);
 

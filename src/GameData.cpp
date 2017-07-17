@@ -7,10 +7,11 @@ const float GameData::aspectRatio = 16.0 / 9.0;
 const int32_t GameData::gameSpaceWidth = 768;
 const int32_t GameData::gameSpaceHeight = 1366;
 
+class Projectile;
+
 GameData::GameData(std::string winName, int32_t width, int32_t height)
 {
-    Player      player;
-	Projectile  projectile[LIM_AMMO];
+    Projectile  bullets[LIM_AMMO];
     mlx = mlx_init();
 	char *cWinName = new char[winName.length()];
 	std::strcpy(cWinName, winName.c_str());
@@ -19,8 +20,6 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 
 	winWidth = width;
 	winHeight = height;
-    P1 = &player;
-    ammo = &projectile;
 	clock = Clock();
 
 	input = (t_input){};
@@ -63,7 +62,9 @@ GameData::GameData(std::string winName, int32_t width, int32_t height)
 	winImage.size_in_bytes = winImage.size_line * winImageHeight;
 	winImage.center.x = winImageWidth / 2;
 	winImage.center.y = winImageHeight / 2;
-    nb_ammo = -1;
+    nb_ammo = 0;
+    for (int i = 0; i < LIM_AMMO ; i++)
+        bullets[i] = Projectile();
 }
 
 void	GameData::updateTime(void) { clock.tick(); }

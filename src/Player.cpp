@@ -1,8 +1,8 @@
 #include "GameData.hpp"
 
 int		Player::speed = 3;
-int		Player::x = 100;
-int		Player::y = 100;
+int		Player::x = 300;
+int		Player::y = 700;
 
 Player::Player(void)
 {

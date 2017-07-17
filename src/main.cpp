@@ -94,18 +94,34 @@ int32_t		gameLoop(void *gameptr)
 // After displaying the new image, upadted goes to 0
 
 	p1->Player_move(&game->input);
-    if (game->input.k_space.ended_down && game->nb_ammo < LIM_AMMO){
-        bullet[game->nb_ammo].Projectile_create(game);
-        std::cout << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << std::endl;
+    //std::cout << "---  before projectile set loop   ---" << std::endl;
+    if (game->input.k_space.ended_down){
+        for (int i = 0; i < LIM_AMMO; i++){
+            if (i == game->nb_ammo){
+                game->nb_ammo++;
+                bullet[i].Projectile_set(game, i);
+                std::cout << i << bullet[i].x << bullet[i].y << game->nb_ammo << std::endl;
+                break;
+            }
+            if (bullet[i].is_alive == 0){
+                bullet[i].Projectile_set(game, i);
+                //std::cout << i << bullet[i].x << bullet[i].y << game->nb_ammo << std::endl;
+                break;
+            }
+            std::cout << game->nb_ammo << "-" << i << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << " main.cpp" << std::endl;
+        }
     }
-    /*for(int i = 0; i < game->nb_ammo; i++)
-        game->ammo[i].Projectile_move(&game->ammo);*/
-
-    //Projectile_move(&game);
+    for(int i = 0; i < LIM_AMMO; i++){
+        if (bullet[i].is_alive == 1)
+            bullet[i].Projectile_move(game);
+            //break;
+    }
 
     // if (game->updated == 1){
 //	mlx_clear_window(game->mlx, game->win);
-	draw(game, bullet, p1);
+    //if (bullet[game->nb_ammo].is_alive > 0 && game->nb_ammo > -1)
+     //  std::cout << bullet[game->nb_ammo].x << " " << bullet[game->nb_ammo].y << " main.cpp" << std::endl;
+     draw(game, bullet, p1);
 	// }
 	// game->updated = 0;
 

@@ -37,12 +37,13 @@ public:
 	int32_t winHeight;
 	Clock	clock;
 	t_input input;
-	Image gameImage;
-	Image winImage;
-	Image *images;
+	Image   gameImage;
+	Image   winImage;
+	Image   *images;
 	void	*P1;
     void    *ammo;
     int     nb_ammo;
+
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?
 
 	// NOTE(Nick): It's typical for most variables in a class to be private,
