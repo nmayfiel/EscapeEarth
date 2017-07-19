@@ -7,6 +7,7 @@
 #include "input.hpp"
 #include "image.hpp"
 #include "MlxManager.hpp"
+#include "ProjectileManager.hpp"
 
 extern const uint8_t image_one_start;
 extern const int32_t image_one_size;
@@ -88,7 +89,12 @@ int32_t		gameLoop(void *gameptr)
 // After displaying the new image, upadted goes to 0
 
 	game->P1.Player_move(&game->input);
-
+	if (game->input.k_space.ended_down)
+	{
+		float2 position = float2(game->P1.x, game->P1.y);
+		game->pm.add(position);
+	}
+	game->pm.update(game->clock.lastFrameTime);
 	// if (game->updated == 1){
 //	mlx_clear_window(game->mlx, game->win);
 	draw(game);
@@ -134,11 +140,12 @@ int	main(void)
 {
 	MlxManager mlx;
 	Clock clock;
+	ProjectileManager projectiles;
 	int2 size = int2(G_WIDTH, G_HEIGHT);
 
 	mlx.init();
 	mlx.newWindow(G_WIDTH, G_HEIGHT, "Escape EARTH");
-	GameData game = GameData(mlx, clock, size);
+	GameData game = GameData(mlx, projectiles, clock, size);
 //	GameData game = GameData(mlx.getMlx(), mlx.getWin(), clock, G_WIDTH, G_HEIGHT);
 
 	// TODO(nick): These images probably need to be std::vector

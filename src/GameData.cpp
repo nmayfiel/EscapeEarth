@@ -9,7 +9,7 @@ const float GameData::aspectRatio = 16.0 / 9.0;
 const int32_t GameData::gameSpaceWidth = 768;
 const int32_t GameData::gameSpaceHeight = 1366;
 
-GameData::GameData(MlxManager &mlx, Clock &c, int2 &size): mlx(mlx), clock(c), winSize(size)
+GameData::GameData(MlxManager &mlx, ProjectileManager &p, Clock &c, int2 &size): mlx(mlx), pm(p), clock(c), winSize(size)
 {
 	input = (t_input){};
 
