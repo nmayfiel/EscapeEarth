@@ -4,6 +4,8 @@
 #include <string>
 #include "Projectile.hpp"
 
+# define MAX_AMMO 100
+
 class	ProjectileManager
 {
 public:
@@ -13,7 +15,7 @@ public:
 	void	add(float2 position);
 	void	killAtIndex(int index);
 
-	Projectile	projectiles[1000];
+	Projectile	projectiles[MAX_AMMO];
 	uint32_t	count;
 	uint32_t	lastIndex;	
 };

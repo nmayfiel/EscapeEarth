@@ -10,9 +10,7 @@ const int32_t GameData::gameSpaceWidth = 768;
 const int32_t GameData::gameSpaceHeight = 1366;
 
 GameData::GameData(MlxManager &mlx, ProjectileManager &p, Clock &c, int2 &size): mlx(mlx), pm(p), clock(c), winSize(size)
-{
-	input = (t_input){};
-
+{	
 	// set up game image
 	int gameSpaceWidth = 768;
 	int gameSpaceHeight = 1366;
@@ -43,6 +41,9 @@ GameData::GameData(MlxManager &mlx, ProjectileManager &p, Clock &c, int2 &size):
 	gameImage.size_in_bytes = gameImage.size_line * gameSpaceHeight;
 	gameImage.center.x = ((float)gameSpaceWidth * gameImage.scale.x) / 2;
 	gameImage.center.y = ((float)gameSpaceHeight * gameImage.scale.y) / 2;
+
+	float2 playerPosition = float2(gameSpaceWidth / 2, gameSpaceHeight * 0.75);
+	P1 = new Player(playerPosition);
 }
 
 void	GameData::updateTime(void) { clock.tick(); }

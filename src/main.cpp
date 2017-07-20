@@ -16,12 +16,12 @@ extern const int32_t image_two_size;
 extern const uint8_t image_three_start;
 extern const int32_t image_three_size;
 
-static void	change_key_state(t_key *key, bool is_down)
+static void	change_key_state(Key *key, bool is_down)
 {
-	if (key->ended_down != is_down)
+	if (key->endedDown != is_down)
 	{
 		key->changed = 1;
-		key->ended_down = is_down;
+		key->endedDown = is_down;
 	}
 	else
 		key->changed = 0;
@@ -29,45 +29,45 @@ static void	change_key_state(t_key *key, bool is_down)
 
 int		keyDownHook(int keycode, void *in)
 {
-	t_input *input;
+	Input *input;
 
-	input = static_cast<t_input *>(in);
+	input = static_cast<Input *>(in);
 	if (keycode == K_EXIT)
 		exit(0);
 	if (keycode == K_UP)
-		change_key_state(&input->k_up, 1);
+		change_key_state(&input->up, 1);
 	if (keycode == K_DOWN)
-		change_key_state(&input->k_down, 1);
+		change_key_state(&input->down, 1);
 	if (keycode == K_LEFT)
-		change_key_state(&input->k_left, 1);
+		change_key_state(&input->left, 1);
 	if (keycode == K_RIGHT)
-		change_key_state(&input->k_right, 1);
+		change_key_state(&input->right, 1);
 	if (keycode == K_SPACE)
-		change_key_state(&input->k_space, 1);
+		change_key_state(&input->space, 1);
 	if (keycode == K_ENTER)
-		change_key_state(&input->k_enter, 1);
+		change_key_state(&input->enter, 1);
 	return (0);
 }
 
 int		keyUpHook(int keycode, void *in)
 {
-	t_input *input;
+	Input *input;
 
-	input = static_cast<t_input *>(in);
+	input = static_cast<Input *>(in);
 	if (keycode == K_EXIT)
 		exit(0);
 	if (keycode == K_UP)
-		change_key_state(&input->k_up, 0);
+		change_key_state(&input->up, 0);
 	if (keycode == K_DOWN)
-		change_key_state(&input->k_down, 0);
+		change_key_state(&input->down, 0);
 	if (keycode == K_LEFT)
-		change_key_state(&input->k_left, 0);
+		change_key_state(&input->left, 0);
 	if (keycode == K_RIGHT)
-		change_key_state(&input->k_right, 0);
+		change_key_state(&input->right, 0);
 	if (keycode == K_SPACE)
-		change_key_state(&input->k_space, 0);
+		change_key_state(&input->space, 0);
 	if (keycode == K_ENTER)
-		change_key_state(&input->k_enter, 0);
+		change_key_state(&input->enter, 0);
 	return (0);
 }
 
@@ -84,24 +84,32 @@ int32_t		gameLoop(void *gameptr)
 
 	game = static_cast<GameData *>(gameptr);
 	game->updateTime();
+	double dt = game->clock.lastFrameTime;
 
 //NOTE(Anthony): Upated goes 1 when any change occurs in GameData.
 // After displaying the new image, upadted goes to 0
 
-	game->P1.Player_move(&game->input);
-	if (game->input.k_space.ended_down)
-	{
-		float2 position = float2(game->P1.x, game->P1.y);
-		game->pm.add(position);
-	}
-	game->pm.update(game->clock.lastFrameTime);
-	// if (game->updated == 1){
-//	mlx_clear_window(game->mlx, game->win);
-	draw(game);
-	//draw(game);
-	// }
-	// game->updated = 0;
+	float3 direction;
+	if (game->input.down.endedDown)
+		direction.y = 1;
+	if (game->input.up.endedDown)
+		direction.y = -1;
+	if (game->input.left.endedDown)
+		direction.x = -1;
+	if (game->input.right.endedDown)
+		direction.x = 1;
+	if(game->input.down.endedDown && game->input.up.endedDown)
+		direction.y = 0;
+	if (game->input.right.endedDown && game->input.left.endedDown)
+		direction.x = 0;
+	game->P1->move(direction, dt);
 
+	float2 playerPosition = float2(game->P1->position.x, game->P1->position.y);
+	if (game->input.space.endedDown)
+		game->pm.add(playerPosition);
+	game->pm.update(dt);
+
+	draw(game);
 	return (0);
 }
 

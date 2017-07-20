@@ -20,9 +20,9 @@ void	ProjectileManager::update(double dt)
 
 void	ProjectileManager::add(float2 position)
 {
-	if (lastIndex < 999 && count <= 999)
+	if (lastIndex < MAX_AMMO && count < MAX_AMMO)
 	{
-		projectiles[lastIndex].setValues(position, 20, true);
+		projectiles[lastIndex].setValues(position, 800, true);
 		++lastIndex;
 		++count;
 	}
@@ -34,8 +34,14 @@ void	ProjectileManager::add(float2 position)
 
 void	ProjectileManager::killAtIndex(int index)
 {
-	projectiles[index] = projectiles[lastIndex];
-	projectiles[lastIndex].kill();
+	// on bullet 0, the count should be one.
+	// on bullet 1, the count should be two.
+	if (index != MAX_AMMO - 1)
+	{
+		projectiles[index].position = projectiles[count - 1].position;
+		projectiles[index].velocity = projectiles[count - 1].velocity;
+	}
+	projectiles[count - 1].kill();
 	lastIndex--;
 	count--;
 }

@@ -28,13 +28,13 @@ public:
 	MlxManager &mlx;
 	ProjectileManager &pm;
 	Clock	&clock;
-	vec2<int32_t> winSize;
+	int2 winSize;
 //	int32_t winWidth;
 //	int32_t winHeight;
-	t_input input;
+	Input input;
 	Image gameImage;
 	Image *images;
-	Player	P1;
+	Player	*P1;
 	
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?
 	// NOTE(Nick): Yes, it should be private eventually, this is typical

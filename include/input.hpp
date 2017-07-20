@@ -1,21 +1,21 @@
 #ifndef INPUT_HPP
 # define INPUT_HPP
 
-typedef struct		s_key
+struct Key
 {
-	bool ended_down;
+	bool endedDown;
 	bool changed;
-}			t_key;
+};
 
-typedef struct		s_input
+struct	Input
 {
 	// t_key	close;
-	t_key	k_up;
-	t_key	k_down;
-	t_key	k_left;
-	t_key	k_right;
-	t_key k_space;
-	t_key k_enter;
+	Key	up;
+	Key	down;
+	Key	left;
+	Key	right;
+	Key	space;
+	Key 	enter;
 	// t_key	up_arrow;
 	// t_key	down_arrow;
 	// t_key	left_alt;
@@ -23,7 +23,6 @@ typedef struct		s_input
 	// t_key	enter;
 	// t_key	pause;
   // t_key fire;
-}			t_input;
-
+};
 
 #endif

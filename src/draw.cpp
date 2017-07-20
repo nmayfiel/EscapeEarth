@@ -20,11 +20,14 @@ void	drawRectangleOfSize(Image *img, float2 pos2, int size)
 	int32_t row;
 	int32_t col;
 	int32_t pos;
-	
+	int32_t width = size;
+	int32_t height = size;
+
+	pos2.x -= width / 2;
 	buff = (int32_t *)img->data;
-	for (row = pos2.y; row < pos2.y + size; ++row)
+	for (row = pos2.y; row < pos2.y + height; ++row)
 	{
-		for (col = pos2.x; col < pos2.x + size; ++col)
+		for (col = pos2.x; col < pos2.x + width; ++col)
 		{
 			pos = col + (img->width * row);
 			if (pos >= 0
@@ -45,7 +48,9 @@ void	drawRectangle(Image *img, float x, float y)
 	int32_t row;
 	int32_t col;
 	int32_t pos;
+	int32_t width = 234;
 	
+	x -= width / 2;
 	buff = (int32_t *)img->data;
 	for (row = y; row < y + 170; ++row)
 	{
@@ -113,7 +118,26 @@ void draw(GameData *game)
 
 	drawBackground(&game->images[0], &game->gameImage, offset);
 
-	drawRectangle(&game->gameImage, game->P1.x, game->P1.y);
+	drawRectangle(&game->gameImage, game->P1->position.x, game->P1->position.y);
+	
+	for (uint32_t i = 0; i < game->pm.count; i++)
+	{
+		bool swap;
+		Projectile bullet;
+		do {
+			bullet = game->pm.projectiles[i];
+			swap = false;
+			if (bullet.isAlive
+			    && (bullet.position.x < 0
+				|| bullet.position.x > game->gameImage.width
+				|| bullet.position.y < 0
+				|| bullet.position.y > game->gameImage.height))
+			{
+				swap = true;
+				game->pm.killAtIndex(i);
+			}
+		} while (swap);
+	}
 	for (uint32_t i = 0; i < game->pm.count; i++)
 	{
 		drawRectangleOfSize(&game->gameImage, game->pm.projectiles[i].position, 20);

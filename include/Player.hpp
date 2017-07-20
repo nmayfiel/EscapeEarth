@@ -4,20 +4,23 @@
 # include <iostream>
 # include <ctime>
 # include "input.hpp"
+# include "vec.hpp"
 
 class Player
 {
 public:
-	Player();
-	~Player();
+	Player(float2 position);
 
-  static int		x;
-  static int		y;
-	static int		speed;
+	float2			position;
+	//static int		x;
+	//static int		y;
+	float			angle;
+	float2			velocity;
+//	static int		speed;
 //	Skin		skin;
-
-	void	Player_move(t_input *input);
-
+	
+	void	move(float3 direction, double dt);
+	
 	// //bool	getDoesMove() const;
 	// //bool	getDoesShoot() const;
 	//
