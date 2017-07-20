@@ -1,5 +1,4 @@
-#ifndef SHIP_HPP
-# define SHIP_HPP
+#pragma once
 
 #include "GameData.hpp"
 #include "helpers.hpp"
@@ -43,5 +42,3 @@ class Texture
 	// int x_dir;
 	// int y_dir;
 };
-
-#endif

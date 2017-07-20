@@ -1,5 +1,4 @@
-#ifndef MLX_MANAGER_HPP
-# define MLX_MANAGER_HPP
+#pragma once
 
 #include <string>
 #include <cstdint>
@@ -23,5 +22,3 @@ public:
 	void	setResizeHook(int (*f)(int, int, void*), void *data);
 	void	startLoop();
 };
-
-#endif

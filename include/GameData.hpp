@@ -1,5 +1,4 @@
-#ifndef GAMEDATA_HPP
-# define GAMEDATA_HPP
+#pragma once
 
 #include "vec.hpp"
 #include "Clock.hpp"
@@ -42,5 +41,3 @@ public:
 	//	one time, then after that we will just get it with the member
 	//	function void *mlx()
 };
-
-#endif

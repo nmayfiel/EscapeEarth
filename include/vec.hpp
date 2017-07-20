@@ -1,5 +1,4 @@
-#ifndef VEC_HPP
-# define VEC_HPP
+#pragma once
 
 template <class T>
 class vec2
@@ -109,5 +108,3 @@ typedef vec3<double> double3;
 typedef vec4<int> int4;
 typedef vec4<float> float4;
 typedef vec4<double> double4;
-
-#endif

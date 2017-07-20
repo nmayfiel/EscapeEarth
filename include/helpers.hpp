@@ -1,5 +1,4 @@
-#ifndef ESCAPEEARTH_H
-#define ESCAPEEARTH_H
+#pragma once
 
 #include <cstdint>
 #include <Carbon/Carbon.h>
@@ -18,5 +17,3 @@
 
 double	secondsPerFrame(uint64_t last, uint64_t current);
 void		clear_image(Image *img, int32_t color);
-
-#endif

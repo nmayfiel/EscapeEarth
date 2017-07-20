@@ -1,5 +1,4 @@
-#ifndef CLOCK_HPP
-# define CLOCK_HPP
+#pragma once
 
 #include <cstdint>
 
@@ -13,5 +12,3 @@ struct		Clock
 
 	Clock(void);
 };
-
-#endif

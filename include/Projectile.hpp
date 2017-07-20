@@ -1,5 +1,4 @@
-#ifndef PROJECTILE_HPP
-# define PROJECTILE_HPP
+#pragma once
 
 #include "vec.hpp"
 
@@ -15,5 +14,3 @@ public:
 	void	update(double dt);
 	void	setValues(float2 position, float velocity, bool isAlive);
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef IMAGE_HPP
-# define IMAGE_HPP
+#pragma once
 
 #include <stdint.h>
 #include "vec.hpp"
@@ -26,5 +25,3 @@ struct		Image
 
 	void	getImageFromData(void *mlx, const uint8_t *imgData, uint32_t size);
 };
-
-#endif

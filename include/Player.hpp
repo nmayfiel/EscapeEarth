@@ -1,5 +1,4 @@
-#ifndef PLAYER_HPP
-# define PLAYER_HPP
+#pragma once
 
 # include <iostream>
 # include <ctime>
@@ -36,5 +35,3 @@ public:
 	// Game	&getGame(void);
 };
 //std::ostream					&operator<<(std::ostream &o, Player const &rhs);
-
-#endif

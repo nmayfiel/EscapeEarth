@@ -1,5 +1,4 @@
-#ifndef INPUT_HPP
-# define INPUT_HPP
+#pragma once
 
 struct Key
 {
@@ -24,5 +23,3 @@ struct	Input
 	// t_key	pause;
   // t_key fire;
 };
-
-#endif
