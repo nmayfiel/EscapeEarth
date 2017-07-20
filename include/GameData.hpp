@@ -7,12 +7,13 @@
 #include "input.hpp"
 #include "image.hpp"
 #include "MlxManager.hpp"
+#include "ProjectileManager.hpp"
 #include <string>
 
 class		GameData
 {
 public:
-	GameData(MlxManager &mlx, Clock &c, int2 &size);
+	GameData(MlxManager &mlx, ProjectileManager &p, Clock &c, int2 &size);
 
 	void	updateTime(void);
 	double	currentTime(void);
@@ -25,14 +26,15 @@ public:
 	static const int32_t	gameSpaceHeight;
 
 	MlxManager &mlx;
-	Clock	clock;
-	vec2<int32_t> winSize;
+	ProjectileManager &pm;
+	Clock	&clock;
+	int2 winSize;
 //	int32_t winWidth;
 //	int32_t winHeight;
-	t_input input;
+	Input input;
 	Image gameImage;
 	Image *images;
-	Player	P1;
+	Player	*P1;
 	
 	// NOTE(Anthony): Are you sure about the "void *mlx" being private?
 	// NOTE(Nick): Yes, it should be private eventually, this is typical

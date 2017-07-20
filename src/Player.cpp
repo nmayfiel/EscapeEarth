@@ -1,28 +1,19 @@
 #include "Player.hpp"
 #include "helpers.hpp"
 
-int		Player::speed = 3;
-int		Player::x = 100;
-int		Player::y = 100;
-
-Player::Player(void)
+Player::Player(float2 position): position(position), velocity(0.0, 0.0) 
 {
     return ;
 }
 
-void    Player::Player_move(t_input *input)
+void    Player::move(float3 direction, double dt)
 {
-	if (input->k_up.ended_down)
-		this->y -= this->speed;
-	if (input->k_down.ended_down)
-		this->y += this->speed;
-	if (input->k_left.ended_down)
-		this->x -= this->speed;
-	if (input->k_right.ended_down)
-		this->x += this->speed;
-}
-
-Player::~Player(void)
-{
-    return ;
+	if (direction.x == 1)
+		position.x += 200.0 * dt;
+	if (direction.y == 1)
+		position.y += 200.0 * dt;
+	if (direction.x == -1)
+		position.x -= 200.0 * dt;
+	if (direction.y == -1)
+		position.y -= 200.0 * dt;
 }
