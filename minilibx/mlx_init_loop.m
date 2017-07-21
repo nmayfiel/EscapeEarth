@@ -30,6 +30,7 @@ void do_loop_flush(CFRunLoopObserverRef observer, CFRunLoopActivity activity, vo
 	{
 	  [(id)win->winid selectGLContext];
 	  [(id)win->winid mlx_gl_draw];
+//	  [(id)win->winid flushGLContext];
 	  glFlush();
 	  win->nb_flush = 0;
 	}
@@ -149,6 +150,7 @@ int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
 	{
 	  [(id)(win->winid) selectGLContext];
 	  [(id)(win->winid) mlx_gl_draw];
+//	  [(id)(win->winid) flushGLContext];
 	  glFlush();
 	  if (!mlx_ptr->main_loop_active)
 	    mlx_int_loop_once();

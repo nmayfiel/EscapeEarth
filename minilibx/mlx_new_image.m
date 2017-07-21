@@ -123,10 +123,10 @@ void	nix_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_im
 		return ;
 	
 	[(id)(win_ptr->winid) selectGLContext];
-	img_ptr->vertexes[0] = 0.0;  img_ptr->vertexes[1] = 0.0;
-	img_ptr->vertexes[2] = img_ptr->width * xscale;  img_ptr->vertexes[3] = 0.0;
-	img_ptr->vertexes[4] = img_ptr->width * xscale;  img_ptr->vertexes[5] = -img_ptr->height * yscale;
-	img_ptr->vertexes[6] = 0.0;  img_ptr->vertexes[7] = -img_ptr->height * yscale;
+//	img_ptr->vertexes[0] = 0.0;  img_ptr->vertexes[1] = 0.0;
+//	img_ptr->vertexes[2] = img_ptr->width * xscale;  img_ptr->vertexes[3] = 0.0;
+//	img_ptr->vertexes[4] = img_ptr->width * xscale;  img_ptr->vertexes[5] = -img_ptr->height * yscale;
+//	img_ptr->vertexes[6] = 0.0;  img_ptr->vertexes[7] = -img_ptr->height * yscale;
 
 	imgctx = add_img_to_ctx(img_ptr, win_ptr);
 	

@@ -83,12 +83,12 @@ int32_t		gameLoop(void *gameptr)
 	GameData *game;
 
 	game = static_cast<GameData *>(gameptr);
-	game->updateTime();
-	double dt = game->clock.lastFrameTime;
 
-//NOTE(Anthony): Upated goes 1 when any change occurs in GameData.
-// After displaying the new image, upadted goes to 0
+	// MARK(nick): update the time
+	game->clock.tick();
+	double dt = game->clock.lastFrameDuration;
 
+	// MARK(nick): change the player direction
 	float3 direction;
 	if (game->input.down.endedDown)
 		direction.y = 1;
@@ -104,43 +104,34 @@ int32_t		gameLoop(void *gameptr)
 		direction.x = 0;
 	game->P1->move(direction, dt);
 
+	// MARK(nick): fire some bullets
 	float2 playerPosition = float2(game->P1->position.x, game->P1->position.y);
 	if (game->input.space.endedDown)
 		game->pm.add(playerPosition);
 	game->pm.update(dt);
 
+	// MARK(nick): do the bullet collision
+	for (uint32_t i = 0; i < game->pm.count; i++)
+	{
+		bool swap;
+		Projectile bullet;
+		do {
+			bullet = game->pm.projectiles[i];
+			swap = false;
+			if (bullet.isAlive
+			    && (bullet.position.x < 0
+				|| bullet.position.x > game->gameImage.width
+				|| bullet.position.y < 0
+				|| bullet.position.y > game->gameImage.height))
+			{
+				swap = true;
+				game->pm.killAtIndex(i);
+			}
+		} while (swap);
+	}
+
 	draw(game);
-	return (0);
-}
 
-int32_t		resizeHook(int width, int height, void *gameptr)
-{
-	GameData *game;
-
-	float xscale, yscale;
-	game = static_cast<GameData *>(gameptr);
-	game->winSize.x = width;
-	game->winSize.y = height;
-	float w, h;
-	w = width;
-	h = height;
-
-	if (h / w > game->aspectRatio)
-	{
-		xscale = 1.0 / ((float)game->gameSpaceWidth / w);
-		yscale = xscale;
-	}
-	else
-	{
-		yscale = 1.0 / ((float)game->gameSpaceHeight / h);
-		xscale = yscale;
-	}
-
-	game->gameImage.scale = float2(xscale, yscale);
-	game->gameImage.center.x = ((float)game->gameImage.width  * xscale) / 2;
-	game->gameImage.center.y = ((float)game->gameImage.height * yscale) / 2;
-	//std::cout << "x" << width << std::endl;
-	//std::cout << "y" << height << std::endl;
 	return (0);
 }
 
@@ -154,7 +145,6 @@ int	main(void)
 	mlx.init();
 	mlx.newWindow(G_WIDTH, G_HEIGHT, "Escape EARTH");
 	GameData game = GameData(mlx, projectiles, clock, size);
-//	GameData game = GameData(mlx.getMlx(), mlx.getWin(), clock, G_WIDTH, G_HEIGHT);
 
 	// TODO(nick): These images probably need to be std::vector
 	// 	maybe try to mess with images.asm to get them in a better format
@@ -170,7 +160,6 @@ int	main(void)
 	mlx.setKeyUpHook(&keyUpHook, &game.input);
 	mlx.setLoopHook(&gameLoop, &game);
 	mlx.setCloseHook(&closeHook, &game);
-	mlx.setResizeHook(&resizeHook, &game);
 	mlx.startLoop();
 	return (0);
 }

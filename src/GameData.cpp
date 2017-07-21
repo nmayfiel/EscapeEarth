@@ -46,10 +46,6 @@ GameData::GameData(MlxManager &mlx, ProjectileManager &p, Clock &c, int2 &size):
 	P1 = new Player(playerPosition);
 }
 
-void	GameData::updateTime(void) { clock.tick(); }
-
-double	GameData::currentTime(void) { return (clock.globalTime);}
-
 void	GameData::setImages(Image *imgs)
 {
 	images = imgs;

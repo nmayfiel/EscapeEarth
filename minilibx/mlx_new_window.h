@@ -50,6 +50,7 @@
 - (void) mlx_gl_draw_img:(mlx_img_list_t *)img andCtx:(mlx_img_ctx_t *)imgctx andX:(int)x andY:(int)y;
 // added by nmayfiel
 - (void) nix_gl_draw_img:(mlx_img_list_t *)img andCtx:(mlx_img_ctx_t *)imgctx andX:(int)x andY:(int)y andScale:(float[2])scale;
+- (void) drawRect: (NSRect)bounds;
 // end added
 - (void) mlx_gl_draw_font:(mlx_img_list_t *)img andCtx:(mlx_img_ctx_t *)imgctx andX:(int)x andY:(int)y andColor:(int)color glyphX:(int)gx glyphY:(int)gy;
 - (NSOpenGLContext *) ctx;

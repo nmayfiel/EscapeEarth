@@ -1,10 +1,7 @@
 #include "Player.hpp"
 #include "helpers.hpp"
 
-Player::Player(float2 position): position(position), velocity(0.0, 0.0) 
-{
-    return ;
-}
+Player::Player(float2 position): position(position), velocity(0.0, 0.0) {}
 
 void    Player::move(float3 direction, double dt)
 {

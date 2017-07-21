@@ -4,11 +4,11 @@
 
 struct		Clock
 {
+	Clock(void);
+
 	double		globalTime;
-	double		lastFrameTime;
+	double		lastFrameDuration;
 	uint64_t	lastUpdate;
 
 	void	tick(void);
-
-	Clock(void);
 };

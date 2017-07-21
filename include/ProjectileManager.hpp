@@ -5,6 +5,12 @@
 
 # define MAX_AMMO 100
 
+// Note(nick): Projectiles need :
+// texture_id
+// collision mask
+// damage_value
+
+
 class	ProjectileManager
 {
 public:
@@ -16,5 +22,4 @@ public:
 
 	Projectile	projectiles[MAX_AMMO];
 	uint32_t	count;
-	uint32_t	lastIndex;	
 };

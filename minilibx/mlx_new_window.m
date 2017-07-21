@@ -274,10 +274,21 @@ int get_mouse_button(NSEventType eventtype)
                     toSize:(NSSize)frameSize
 {
 	NSRect contentRect = [window contentRectForFrameRect: window.frame];
-	int x = contentRect.size.width;
-	int y = contentRect.size.height;
-	if (event_funct[18] != NULL)
-		event_funct[18](x, y, event_param[18]);
+
+	float widthAdd = ([window frame].size.width - contentRect.size.width);
+	float heightAdd = ([window frame].size.height - contentRect.size.height);
+
+	float renderHeight = 1366;
+	float renderWidth = 768;
+
+	float newCx = (renderWidth * (frameSize.height - heightAdd)) / renderHeight;
+
+	frameSize.width = newCx + widthAdd;
+	
+//	int x = contentRect.size.width;
+//	int y = contentRect.size.height;
+//	if (event_funct[18] != NULL)
+//		event_funct[18](x, y, event_param[18]);
 	return (frameSize);
 }
 // end added
@@ -339,7 +350,8 @@ int get_mouse_button(NSEventType eventtype)
 
       glClearColor(0, 0, 0, 0);
       glClear(GL_COLOR_BUFFER_BIT);
-      glFlush();
+      [self flushGLContext];
+      //glFlush();
 
       [pixFmt release];
     }
@@ -395,8 +407,9 @@ int get_mouse_button(NSEventType eventtype)
   glsl.loc_font_atlassize = glGetUniformLocation(glsl.font_program, "fontatlassize");
   glsl.loc_font_winhalfsize = glGetUniformLocation(glsl.font_program, "winhalfsize");
   glsl.loc_font_position = glGetAttribLocation(glsl.font_program, "position");
- 
-  glFlush();
+
+  [self flushGLContext];
+//  glFlush();
   return (1);
 }
 
@@ -603,13 +616,31 @@ int get_mouse_button(NSEventType eventtype)
 
 // Added by nmayfiel
 
+- (void) prepareOpenGL
+{
+	[super prepareOpenGL];
+	[[self openGLContext] makeCurrentContext];
+}
+
+- (void) drawRect: (NSRect)bounds
+{
+	if ([self inLiveResize])
+	{
+		glClearColor(0.0, 0.5, 0.5, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT);
+		//	[self mlx_gl_draw];
+		glFlush();
+	}
+//[self flushGLContext];
+}
+
 - (void)reshape
 {
 	[super reshape];
 
 	NSRect bounds = [self bounds];
-	size_x = bounds.size.width;
-	size_y = bounds.size.height;
+//	size_x = bounds.size.width;
+//	size_y = bounds.size.height;
 	[[self openGLContext] makeCurrentContext];
 	[[self openGLContext] update];
 	glViewport(0, 0, bounds.size.width, bounds.size.height);

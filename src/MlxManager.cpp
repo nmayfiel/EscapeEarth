@@ -1,6 +1,8 @@
 #include <mlx.h>
 #include "MlxManager.hpp"
+#include <string>
 #include <cstdint>
+#include "vec.hpp"
 
 void	MlxManager::init(void) { mlx = mlx_init(); }
 
@@ -52,3 +54,13 @@ void	MlxManager::setResizeHook(int (*f)(int, int, void *), void *data)
 }
 
 void	MlxManager::startLoop(void){ mlx_loop(mlx);}
+
+void	MlxManager::drawGameImage(void *imgPtr, float2 scale)
+{
+	nix_put_image_to_window(mlx, win, imgPtr, 0, 0, scale.x, scale.y);
+}
+
+void	MlxManager::clear(void)
+{
+	mlx_clear_window(mlx, win);
+}

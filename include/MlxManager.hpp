@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstdint>
+#include "vec.hpp"
 
 struct MlxManager
 {
@@ -20,5 +21,7 @@ public:
 	void	setMouseMoveHook(int (*f)(int, int, int, void*), void *data);
 	void	setMouseClickHook(int (*f)(int, int, int, void*), void *data);
 	void	setResizeHook(int (*f)(int, int, void*), void *data);
+	void	drawGameImage(void *imgPtr, float2 scale);
+	void	clear(void);
 	void	startLoop();
 };
