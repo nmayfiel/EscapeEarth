@@ -1,8 +1,10 @@
-void checkColliders(GameData *game, )
+template <class p1_ammo_enemy_template>
+
+void checkColliders(GameData *game)
 {
-	for (int i = 0; i < pm.count; i++)
+	for (int i = 0; i < game->pm.count; i++)
 	{
-		for (int j = 0; j < em.count; j++)
+		for (int j = 0; j < game->em.count; j++)
 		{
 			if (game->pm.projectile[i].pos.x + game->images[game->pm.projectile[i].tx].width/2 >= game->em.projectile[j].pos.x - game->images[game->em.projectile[j].tx].width) // projectile rightmost, enemy leftmost
 			{
